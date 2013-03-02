@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/editor_menu_apply"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/editor_menu_apply"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/editor_menu_discard"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/editor_menu_discard"
+        android:showAsAction="ifRoom"/>
+    <item android:id="@+id/editor_menu_remove"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/editor_menu_remove"
+        android:showAsAction="ifRoom"/>
+
+</menu>

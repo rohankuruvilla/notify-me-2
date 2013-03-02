@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Notify Me!</string>
+    <string name="title_activity_edit_filter">List Editor</string>
+    <string name="editor_app_chooser_title">Choose an app</string>
+    <string name="editor_keywords_title">Keyword filter</string>
+    <string name="editor_keywords_description">Only catch notifications that contain at least one of the following keywords or -phrases (one word/phrase per line):</string>
+    <string name="editor_popup_title">Show popups</string>
+    <string name="editor_popup_description">Show popups for notifications that this app spawns, just light up the display otherwise.</string>
+    <string name="editor_expansion_title">Allow expansion</string>
+    <string name="editor_expansion_description">Allow expansion of notifications that provide a bigger view.</string>
+    <string name="editor_menu_apply">Exit saving changes</string>
+    <string name="editor_menu_apply0">Exit adding item</string>
+    <string name="editor_menu_discard">Exit discarding changes</string>
+    <string name="editor_menu_discard0">Exit discarding item</string>
+    <string name="editor_menu_remove">Remove item from list</string>
+    <string name="editor_leave_toast">Press Back again to exit without saving. If that\'s not your intention, consider having a look at the options menu.</string>
+    <string name="title_activity_app_picker">App Picker</string>
+    <string name="app_picker_duplicate">This app is already in the list.</string>
+    <string name="main_remove_title1">Remove</string>
+    <string name="main_remove_title2">from list?</string>
+    <string name="main_remove_ok">Remove</string>
+    <string name="main_remove_cancel">Cancel</string>
+    <string name="main_add_to_list">Add an app</string>
+    <string name="main_check_checking">I don\'t know if the AccessibilityService is running, just let me check&#8230;</string>
+    <string name="main_check_good_message">The AccessibilityService is running and Notify Me! can do its job.</string>
+    <string name="main_check_good_button">Let\'s go!</string>
+    <string name="main_check_bad_message">It seems that the AccessibilityService is not running. Please check that Notify Me! is enabled in Accessibility settings.</string>
+    <string name="main_check_bad_message0">\nIf you feel like you\'ve been here before, you might experience a bug in Android that prevents an AccessibilityService from starting properly. Try disabling and re-enabling Notify Me! in Accessibility settings.</string>
+    <string name="main_check_bad_button">Take me there!</string>
+    <string name="main_menu_checkaccessibility">Check AccessibilityService</string>
+    <string name="main_menu_popupbackground">Popup background</string>
+    <string name="main_menu_popupbackground_message">If the notification popup\'s background color makes the text unreadable, try using the inverted background color.</string>
+    <string name="main_menu_popupbackground_message0">At the moment, the inverted color is used.</string>
+    <string name="main_menu_popupbackground_message1">At the moment, the default color is used.</string>
+    <string name="main_menu_popupbackground_button0">Use default color</string>
+    <string name="main_menu_popupbackground_button1">Use inverted color</string>
+    <string name="main_menu_help">Help</string>
+    <string name="main_menu_help_message">Now that you are here, you should at least know what this app does. To serve its purpose, you need to provide a list of apps that are allowed to use Notify Me!\'s services. Do this by adding (\"Add an app\") or removing (long tap on an item or via the menu in its settings) apps to/from the list. You reach a list item\'s settings by just tapping it. If Notify Me! doesn\'t do as it\'s supposed to, have a look at the main screen\'s menu and try checking whether the AccessibilityService is running.</string>
+    <string name="main_menu_help_title">How to use this app</string>
+    <string name="main_menu_help_ok_button">Got it!</string>
+    <string name="main_menu_help_question_button">There\'s a question left&#8230;</string>
+    <string name="main_menu_about">About this app</string>
+    <string name="main_menu_about_message">An app to enhance Android&#8482;\'s abilities to show notifications.\nCopyright &#169; 2013 Tom Kranz\nThis program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under the conditions of the GPLv3 or (at your option) later versions; tap the \"GPL?\" button for details.\nAndroid is a trademark of Google Inc.</string>
+    <string name="main_menu_about_title">About Notify Me!</string>
+    <string name="main_menu_about_ok_button">Okay, cool thing</string>
+    <string name="main_menu_about_license_button">GPL?</string>
+    <string name="main_menu_about_donate_button">Buy me a soy milk</string>
+    <string name="notification_view_button">View</string>
+    <string name="notification_dismiss_button">Dismiss</string>
+    <string name="notification_collapse_button">Collapse</string>
+    <string name="notification_expand_button">Expand</string>
+    <string name="accessibility_service_description">Enable this service to use Notify Me!. Otherwise it would not be able to register any notifications, which would render the app useless.</string>
+
+</resources>

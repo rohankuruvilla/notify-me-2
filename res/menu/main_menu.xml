@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/main_menu_checkaccessibility"
+        android:icon="@android:drawable/ic_menu_directions"
+        android:title="@string/main_menu_checkaccessibility"
+        android:showAsAction="never" />
+    <item android:id="@+id/main_menu_popupbackground"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/main_menu_popupbackground"
+        android:showAsAction="never" />
+    <item android:id="@+id/main_menu_help"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="@string/main_menu_help"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/main_menu_about"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/main_menu_about"
+        android:showAsAction="never" />
+</menu>
