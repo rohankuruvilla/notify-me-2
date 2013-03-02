@@ -24,6 +24,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+        public static final int action_settings=0x7f0a001a;
         public static final int app_picker_list=0x7f0a0000;
         public static final int editor_app_chooser=0x7f0a0001;
         public static final int editor_app_chooser_button=0x7f0a0002;
@@ -64,9 +65,11 @@ public final class R {
     public static final class menu {
         public static final int edit_filter_menu=0x7f090000;
         public static final int main_menu=0x7f090001;
+        public static final int unlock=0x7f090002;
     }
     public static final class string {
         public static final int accessibility_service_description=0x7f070032;
+        public static final int action_settings=0x7f070034;
         public static final int app_name=0x7f070000;
         public static final int app_picker_duplicate=0x7f070010;
         public static final int editor_app_chooser_title=0x7f070002;
@@ -82,6 +85,7 @@ public final class R {
         public static final int editor_menu_remove=0x7f07000d;
         public static final int editor_popup_description=0x7f070006;
         public static final int editor_popup_title=0x7f070005;
+        public static final int hello_world=0x7f070035;
         public static final int main_add_to_list=0x7f070015;
         public static final int main_check_bad_button=0x7f07001b;
         public static final int main_check_bad_message=0x7f070019;
@@ -117,6 +121,7 @@ public final class R {
         public static final int notification_view_button=0x7f07002e;
         public static final int title_activity_app_picker=0x7f07000f;
         public static final int title_activity_edit_filter=0x7f070001;
+        public static final int title_activity_unlock=0x7f070033;
     }
     public static final class style {
         /** 

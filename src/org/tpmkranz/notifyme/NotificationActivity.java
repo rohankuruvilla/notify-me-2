@@ -29,7 +29,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
@@ -76,7 +75,6 @@ public class NotificationActivity extends Activity {
 			localViews = ( (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE) ).inflate(remoteViews.getLayoutId(), null);
 			remoteViews.reapply(this, localViews);
 		}catch(Exception e){
-			Log.d("Tpm", e.toString());
 			showPopup = false;
 		}
 		if( showPopup ){
@@ -90,7 +88,8 @@ public class NotificationActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						try{
-							notif.contentIntent.send();
+							dialog.dismiss();
+							startActivity(new Intent(getApplicationContext(), Unlock.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 						}catch(Exception e){
 							
 						}

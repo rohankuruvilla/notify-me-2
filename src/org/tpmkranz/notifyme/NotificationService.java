@@ -24,7 +24,6 @@ import android.app.KeyguardManager;
 import android.app.Notification;
 import android.content.Intent;
 import android.os.PowerManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
@@ -108,7 +107,6 @@ public class NotificationService extends AccessibilityService {
 	}
 
 	private void triggerNotification(AccessibilityEvent event) {
-		Log.d("Tpm", event.toString());
 		((TemporaryStorage)getApplicationContext()).storeStuff(event.getParcelableData());
 		((TemporaryStorage)getApplicationContext()).storeStuff(filter);
 		startActivity(new Intent(this, NotificationActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) );
