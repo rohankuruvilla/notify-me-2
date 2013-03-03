@@ -25,14 +25,9 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
-import android.widget.ImageView;
 import android.widget.RemoteViews;
 
 @SuppressLint("NewApi")
@@ -72,17 +67,11 @@ public class NotificationActivity extends Activity {
 				remoteViews = notif.bigContentView;
 			else
 				remoteViews = notif.contentView;		
-			localViews = ( (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE) ).inflate(remoteViews.getLayoutId(), null);
-			remoteViews.reapply(this, localViews);
+			localViews = remoteViews.apply(this, null);
 		}catch(Exception e){
 			showPopup = false;
 		}
 		if( showPopup ){
-			try{
-				((ImageView)localViews.findViewById(16908294)).getDrawable().hashCode();
-			}catch(Exception e){
-				((ImageView)localViews.findViewById(16908294)).setImageDrawable(getOriginalIcon(prefs.getFilterApp(filter)));
-			}
 			AlertDialog.Builder builder = new AlertDialog.Builder(this).setInverseBackgroundForced(prefs.isBackgroundColorInverted()).setView(localViews).setPositiveButton(R.string.notification_view_button,
 					new OnClickListener(){
 					@Override
@@ -135,15 +124,6 @@ public class NotificationActivity extends Activity {
 		dialog.show();
 		if( !showPopup )
 			dialog.dismiss();
-	}
-
-	Drawable getOriginalIcon(String packageName){
-		PackageManager packMan = getPackageManager();
-		try {
-			return packMan.getApplicationIcon(packageName);
-		} catch (NameNotFoundException e) {
-			return null;
-		}
 	}
 	
 	@Override

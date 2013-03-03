@@ -24,7 +24,6 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a001a;
         public static final int app_picker_list=0x7f0a0000;
         public static final int editor_app_chooser=0x7f0a0001;
         public static final int editor_app_chooser_button=0x7f0a0002;
@@ -65,7 +64,6 @@ public final class R {
     public static final class menu {
         public static final int edit_filter_menu=0x7f090000;
         public static final int main_menu=0x7f090001;
-        public static final int unlock=0x7f090002;
     }
     public static final class string {
         public static final int accessibility_service_description=0x7f070032;
