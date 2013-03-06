@@ -16,7 +16,8 @@
         android:id="@+id/editor_app_chooser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp" >
+        android:layout_marginTop="6dp"
+        android:onClick="chooseApp" >
 
         <ImageView
             android:id="@+id/editor_app_chooser_button"
@@ -25,7 +26,6 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:clickable="true"
-            android:onClick="chooseApp"
             android:src="@android:drawable/ic_menu_add" />
 
         <ImageView
@@ -33,7 +33,6 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:clickable="true"
-            android:onClick="chooseApp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true" />
 
@@ -43,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:clickable="true"
-            android:onClick="chooseApp"
             android:layout_marginRight="6dp"
             android:layout_toLeftOf="@id/editor_chosen_app_icon"
             android:layout_toRightOf="@id/editor_app_chooser_button"

@@ -30,12 +30,11 @@
     <string name="main_check_bad_message0">\nIf you feel like you\'ve been here before, you might experience a bug in Android that prevents an AccessibilityService from starting properly. Try disabling and re-enabling Notify Me! in Accessibility settings.</string>
     <string name="main_check_bad_button">Take me there!</string>
     <string name="main_menu_checkaccessibility">Check AccessibilityService</string>
-    <string name="main_menu_popupbackground">Popup background</string>
-    <string name="main_menu_popupbackground_message">If the notification popup\'s background color makes the text unreadable, try using the inverted background color.</string>
-    <string name="main_menu_popupbackground_message0">At the moment, the inverted color is used.</string>
-    <string name="main_menu_popupbackground_message1">At the moment, the default color is used.</string>
-    <string name="main_menu_popupbackground_button0">Use default color</string>
-    <string name="main_menu_popupbackground_button1">Use inverted color</string>
+    <string name="main_menu_popup">Popup preferences</string>
+    <string name="main_menu_popup_background_title">Invert background color</string>
+    <string name="main_menu_popup_background_description">If the popup\'s background color makes the notification\'s text unreadable, try inverting the background color. This should only affect Android versions &lt;&#160;3.</string>
+    <string name="main_menu_popup_interface_title">Slider interface</string>
+    <string name="main_menu_popup_interface_description">Show a slider instead of buttons to interact with the popup.</string>
     <string name="main_menu_help">Help</string>
     <string name="main_menu_help_message">Now that you are here, you should at least know what this app does. To serve its purpose, you need to provide a list of apps that are allowed to use Notify Me!\'s services. Do this by adding (\"Add an app\") or removing (long tap on an item or via the menu in its settings) apps to/from the list. You reach a list item\'s settings by just tapping it. If Notify Me! doesn\'t do as it\'s supposed to, have a look at the main screen\'s menu and try checking whether the AccessibilityService is running.</string>
     <string name="main_menu_help_title">How to use this app</string>
@@ -55,5 +54,6 @@
     <string name="title_activity_unlock">Unlock</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_notification_slider">NotificationSliderActivity</string>
 
 </resources>

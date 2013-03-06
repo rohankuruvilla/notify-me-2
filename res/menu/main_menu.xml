@@ -4,9 +4,9 @@
         android:icon="@android:drawable/ic_menu_directions"
         android:title="@string/main_menu_checkaccessibility"
         android:showAsAction="never" />
-    <item android:id="@+id/main_menu_popupbackground"
+    <item android:id="@+id/main_menu_popup"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:title="@string/main_menu_popupbackground"
+        android:title="@string/main_menu_popup"
         android:showAsAction="never" />
     <item android:id="@+id/main_menu_help"
         android:icon="@android:drawable/ic_menu_help"

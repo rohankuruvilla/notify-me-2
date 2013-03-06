@@ -121,6 +121,7 @@ public class NotificationActivity extends Activity {
 				}
 			}
 		);
+		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 		if( !showPopup )
 			dialog.dismiss();

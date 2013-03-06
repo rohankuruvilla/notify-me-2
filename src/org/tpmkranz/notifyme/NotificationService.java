@@ -109,7 +109,10 @@ public class NotificationService extends AccessibilityService {
 	private void triggerNotification(AccessibilityEvent event) {
 		((TemporaryStorage)getApplicationContext()).storeStuff(event.getParcelableData());
 		((TemporaryStorage)getApplicationContext()).storeStuff(filter);
-		startActivity(new Intent(this, NotificationActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) );
+		if( prefs.isInterfaceSlider() )
+			startActivity(new Intent(this, NotificationSliderActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
+		else
+			startActivity(new Intent(this, NotificationActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
 	}
 
 	@Override

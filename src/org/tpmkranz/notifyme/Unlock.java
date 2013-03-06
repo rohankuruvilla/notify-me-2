@@ -27,10 +27,12 @@ import android.view.WindowManager.LayoutParams;
 
 public class Unlock extends Activity {
 
+	Notification notif;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
+		notif = ((Notification) ((TemporaryStorage)getApplicationContext()).getParcelable());
 		new WaitForUnlock().execute();
 	}
 
@@ -54,7 +56,7 @@ public class Unlock extends Activity {
 			finish();
 			if( result.booleanValue() ){
 				try{
-					((Notification) ((TemporaryStorage)getApplicationContext()).getParcelable()).contentIntent.send();
+					notif.contentIntent.send();
 				}catch(Exception e){
 					
 				}

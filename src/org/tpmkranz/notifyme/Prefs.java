@@ -52,8 +52,17 @@ public class Prefs {
 		return prefs.getBoolean("BackgroundInverted", true);
 	}
 	
-	protected void invertBackgroundColor(){
-		edit.putBoolean("BackgroundInverted", !isBackgroundColorInverted());
+	protected void setBackgroundColorInverted(boolean inverted){
+		edit.putBoolean("BackgroundInverted", inverted);
+		edit.commit();
+	}
+	
+	protected boolean isInterfaceSlider(){
+		return prefs.getBoolean("InterfaceSlider", false);
+	}
+	
+	protected void setInterfaceSlider(boolean slider){
+		edit.putBoolean("InterfaceSlider", slider);
 		edit.commit();
 	}
 	

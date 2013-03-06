@@ -42,6 +42,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -262,17 +263,35 @@ public class MainActivity extends Activity {
 				finish();
 				startActivity(getIntent());
 				return true;
-			case R.id.main_menu_popupbackground:
-				new AlertDialog.Builder(this).setMessage(getResources().getString(R.string.main_menu_popupbackground_message)+" "
-						+getResources().getString(( prefs.isBackgroundColorInverted() ? R.string.main_menu_popupbackground_message0 : R.string.main_menu_popupbackground_message1 )))
-					.setPositiveButton(( prefs.isBackgroundColorInverted() ? R.string.main_menu_popupbackground_button0 : R.string.main_menu_popupbackground_button1 ), 
-					new DialogInterface.OnClickListener(){
+			case R.id.main_menu_popup:
+				final View view = ((LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.main_menu_popup, null);
+				((CheckBox)view.findViewById(R.id.main_menu_popup_background_checkbox)).setChecked(prefs.isBackgroundColorInverted());
+				view.findViewById(R.id.main_menu_popup_background_caption).setOnClickListener(
+					new View.OnClickListener() {
 						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							prefs.invertBackgroundColor();
+						public void onClick(View v) {
+							((CheckBox)view.findViewById(R.id.main_menu_popup_background_checkbox)).toggle();
 						}
 					}
-				).show();
+				);
+				((CheckBox)view.findViewById(R.id.main_menu_popup_interface_checkbox)).setChecked(prefs.isInterfaceSlider());
+				view.findViewById(R.id.main_menu_popup_interface_caption).setOnClickListener(
+					new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							((CheckBox)view.findViewById(R.id.main_menu_popup_interface_checkbox)).toggle();
+						}
+					}
+				);
+				new AlertDialog.Builder(this).setView(view).setPositiveButton("Save",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							prefs.setBackgroundColorInverted(((CheckBox)view.findViewById(R.id.main_menu_popup_background_checkbox)).isChecked());
+							prefs.setInterfaceSlider(((CheckBox)view.findViewById(R.id.main_menu_popup_interface_checkbox)).isChecked());
+						}
+					}
+				).setNegativeButton("Cancel", null).show();
 				return true;
 			case R.id.main_menu_help:
 				new AlertDialog.Builder(this).setMessage(R.string.main_menu_help_message).setTitle(R.string.main_menu_help_title)
