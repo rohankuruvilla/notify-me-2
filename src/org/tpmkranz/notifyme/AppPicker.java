@@ -17,6 +17,7 @@
 */
 package org.tpmkranz.notifyme;
 
+import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
@@ -44,7 +45,7 @@ public class AppPicker extends Activity{
 	PackageManager packMan;
 	List<ApplicationInfo> appInfos;
 	Drawable[] icons;
-	String[] appNames;
+	String[] appNames, appPackages;
 	ProgressDialog plsWait;
 	GetAppList stuff;
 	boolean ready = false;
@@ -77,7 +78,7 @@ public class AppPicker extends Activity{
 			new OnItemClickListener(){
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-					String app = appInfos.get(position).packageName;
+					String app = appPackages[position];
 					Prefs prefs = new Prefs(view.getContext());
 					for( int i = 0 ; i < prefs.getNumberOfFilters() ; i++){
 						if( app.equals(prefs.getFilterApp(i)) && i != filter ){
@@ -123,6 +124,9 @@ public class AppPicker extends Activity{
 
 	private class GetAppList extends AsyncTask<Void, Integer, Void>{
 
+		String[] packageBuffer;
+		Drawable[] iconBuffer;
+		
 		@Override
 		protected void onPreExecute(){
 			packMan = getPackageManager();
@@ -133,10 +137,24 @@ public class AppPicker extends Activity{
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			appNames = new String[appInfos.size()];
+			appPackages = new String[appInfos.size()];
+			packageBuffer = new String[appInfos.size()];
 			icons = new Drawable[appInfos.size()];
+			iconBuffer = new Drawable[appInfos.size()];
+			
 			for( int i = 0 ; i < appInfos.size() && !isCancelled(); i++){
-				appNames[i] = packMan.getApplicationLabel(appInfos.get(i)).toString();
-				icons[i] = packMan.getApplicationIcon(appInfos.get(i));
+				appNames[i] = packMan.getApplicationLabel(appInfos.get(i)).toString()+" "+String.valueOf(i);
+				packageBuffer[i] = appInfos.get(i).packageName;
+				iconBuffer[i] = packMan.getApplicationIcon(appInfos.get(i));
+				publishProgress(i+1);
+			}
+			Arrays.sort(appNames);
+			int j;
+			for( int i = 0 ; i < appInfos.size() ; i++ ){
+				j = Integer.parseInt(appNames[i].substring(appNames[i].lastIndexOf(" ")+1));
+				appPackages[i] = packageBuffer[j];
+				icons[i] = iconBuffer[j];
+				appNames[i] = appNames[i].substring(0, appNames[i].lastIndexOf(" "));
 				publishProgress(i+1);
 			}
 			if( isCancelled() )

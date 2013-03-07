@@ -26,7 +26,8 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:clickable="true"
-            android:src="@android:drawable/ic_menu_add" />
+            android:src="@android:drawable/ic_menu_add"
+            android:onClick="chooseApp" />
 
         <ImageView
             android:id="@+id/editor_chosen_app_icon"
@@ -34,7 +35,8 @@
             android:layout_height="36dp"
             android:clickable="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:onClick="chooseApp" />
 
         <TextView
             android:id="@+id/editor_chosen_app_name"
@@ -45,7 +47,8 @@
             android:layout_marginRight="6dp"
             android:layout_toLeftOf="@id/editor_chosen_app_icon"
             android:layout_toRightOf="@id/editor_app_chooser_button"
-            android:gravity="right" />
+            android:gravity="right"
+            android:onClick="chooseApp" />
     </RelativeLayout>
 
     <RelativeLayout 

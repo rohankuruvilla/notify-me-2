@@ -69,6 +69,84 @@
             android:text="@string/main_menu_popup_interface_description" />
         </LinearLayout>
     </RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/main_menu_popup_color"
+        android:layout_below="@id/main_menu_popup_interface"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp">
 
+        <TextView
+            android:id="@+id/main_menu_popup_color_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/main_menu_popup_color_description"
+            android:textStyle="bold" />
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/main_menu_popup_color_description">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <SeekBar 
+                    android:id="@+id/main_menu_popup_color_slider_r"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <EditText 
+                    android:id="@+id/main_menu_popup_color_edit_r"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="R"
+                    android:gravity="center"
+                    android:inputType="number"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <SeekBar 
+                    android:id="@+id/main_menu_popup_color_slider_g"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <EditText 
+                    android:id="@+id/main_menu_popup_color_edit_g"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="G"
+                    android:gravity="center"
+                    android:inputType="number"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <SeekBar 
+                    android:id="@+id/main_menu_popup_color_slider_b"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <EditText 
+                    android:id="@+id/main_menu_popup_color_edit_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="B"
+                    android:gravity="center"
+                    android:inputType="number"/>
+            </LinearLayout>
+        </LinearLayout>
+        <ImageView 
+            android:id="@+id/main_menu_popup_color_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/main_menu_popup_color_description"/>
+    </RelativeLayout>
+    
 </RelativeLayout>
 </ScrollView>

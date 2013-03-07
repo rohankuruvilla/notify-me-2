@@ -17,11 +17,13 @@
 */
 package org.tpmkranz.notifyme;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
+@SuppressLint("CommitPrefEdits")
 public class Prefs {
 	private final SharedPreferences prefs;
 	private final Editor edit;
@@ -63,6 +65,23 @@ public class Prefs {
 	
 	protected void setInterfaceSlider(boolean slider){
 		edit.putBoolean("InterfaceSlider", slider);
+		edit.commit();
+	}
+	
+	protected int getSliderBackgroundR(){
+		return prefs.getInt("SliderBackgroundR", ( android.os.Build.VERSION.SDK_INT > 10 ? 24 : 255 ));
+	}
+	protected int getSliderBackgroundG(){
+		return prefs.getInt("SliderBackgroundG", ( android.os.Build.VERSION.SDK_INT > 10 ? 24 : 255 ));
+	}
+	protected int getSliderBackgroundB(){
+		return prefs.getInt("SliderBackgroundB", ( android.os.Build.VERSION.SDK_INT > 10 ? 24 : 255 ));
+	}
+	
+	protected void setSliderBackground(int r, int g, int b){
+		edit.putInt("SliderBackgroundR", r);
+		edit.putInt("SliderBackgroundG", g);
+		edit.putInt("SliderBackgroundB", b);
 		edit.commit();
 	}
 	

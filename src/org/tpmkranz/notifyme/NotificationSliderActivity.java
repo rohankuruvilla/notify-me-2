@@ -46,7 +46,7 @@ public class NotificationSliderActivity extends Activity {
 	View nView;
 	ViewGroup pView;
 	SliderSurfaceView sView;
-	float X;
+	float X, lastX;
 	DrawTask dTask;
 	GestureDetector geDet;
 	AlertDialog dialog;
@@ -103,6 +103,7 @@ public class NotificationSliderActivity extends Activity {
 				}
 			);
 			sView.setOnClickListener(null);
+			sView.setZOrderOnTop(true);
 			dialog = new AlertDialog.Builder(this).setView(pView).setInverseBackgroundForced(prefs.isBackgroundColorInverted()).create();
 			dialog.setCanceledOnTouchOutside(false);
 			dialog.setOnCancelListener(
@@ -156,11 +157,15 @@ public class NotificationSliderActivity extends Activity {
 					BitmapFactory.decodeResource(res, R.drawable.ic_lock_dismiss),
 					BitmapFactory.decodeResource(res, R.drawable.ic_lock_dismiss0));
 			X = sView.centerX;
+			lastX = X / 2;
 			while( !this.isCancelled() ){
 				while( sView.onDisplay ){
-					sView.doDraw(X, touchValid);
-					if( !touchValid ){
-						X = sView.centerX;
+					if( lastX != X ){
+						sView.doDraw(X, touchValid);
+						if( !touchValid ){
+							lastX = X;
+							X = sView.centerX;
+						}
 					}
 				}
 			}
@@ -192,6 +197,7 @@ public class NotificationSliderActivity extends Activity {
 				triggers = false;
 			}
 			if( touchValid ){
+				lastX = X;
 				X = ev2.getX();
 				return true;
 			}else

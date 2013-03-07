@@ -35,6 +35,7 @@
     <string name="main_menu_popup_background_description">If the popup\'s background color makes the notification\'s text unreadable, try inverting the background color. This should only affect Android versions &lt;&#160;3.</string>
     <string name="main_menu_popup_interface_title">Slider interface</string>
     <string name="main_menu_popup_interface_description">Show a slider instead of buttons to interact with the popup.</string>
+    <string name="main_menu_popup_color_description">Set the background color for the slider</string>
     <string name="main_menu_help">Help</string>
     <string name="main_menu_help_message">Now that you are here, you should at least know what this app does. To serve its purpose, you need to provide a list of apps that are allowed to use Notify Me!\'s services. Do this by adding (\"Add an app\") or removing (long tap on an item or via the menu in its settings) apps to/from the list. You reach a list item\'s settings by just tapping it. If Notify Me! doesn\'t do as it\'s supposed to, have a look at the main screen\'s menu and try checking whether the AccessibilityService is running.</string>
     <string name="main_menu_help_title">How to use this app</string>

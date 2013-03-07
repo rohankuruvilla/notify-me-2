@@ -1,9 +1,26 @@
 package org.tpmkranz.notifyme;
 
+/*	Notify Me!, an app to enhance Android(TM)'s abilities to show notifications.
+	Copyright (C) 2013 Tom Kranz
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	
+	Android is a trademark of Google Inc.
+*/
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -15,17 +32,18 @@ public class SliderSurfaceView extends SurfaceView implements SurfaceHolder.Call
 	private Bitmap lock, handle, dismiss, dismiss0, view, view0;
 	private Canvas canvas;
 	protected float centerY, centerX, leftX, rightX, drawX, offsetX, offsetY;
-	private Paint paint;
+	private int color;
+	Prefs prefs;
 	
 	public SliderSurfaceView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		prefs = new Prefs(context);
 		onDisplay = false;
+		color = Color.rgb(prefs.getSliderBackgroundR(), prefs.getSliderBackgroundG(), prefs.getSliderBackgroundB());
 		sHolder = this.getHolder();
 		sHolder.addCallback(this);
-		paint = new Paint();
-		paint.setARGB(255, 0, 0, 0);
 	}
-
+	
 	@Override
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
 		
@@ -72,11 +90,7 @@ public class SliderSurfaceView extends SurfaceView implements SurfaceHolder.Call
 		}else{
 			drawX = ( x > rightX ? rightX : x );
 		}
-		canvas.drawRect(0, 0, centerX * 2, centerY * 2, paint);
-		if( !touch )
-			canvas.drawBitmap(lock, drawX - offsetX, centerY - offsetY, null);
-		else if( drawX != leftX && drawX != rightX )
-			canvas.drawBitmap(handle, drawX - offsetX, centerY - offsetY, null);
+		canvas.drawColor(color);
 		if( drawX == leftX )
 			canvas.drawBitmap(dismiss0, leftX - offsetX, centerY - offsetY, null);
 		else
@@ -85,6 +99,10 @@ public class SliderSurfaceView extends SurfaceView implements SurfaceHolder.Call
 			canvas.drawBitmap(view0, rightX - offsetX, centerY - offsetY, null);
 		else
 			canvas.drawBitmap(view, rightX - offsetX, centerY - offsetY, null);
+		if( !touch )
+			canvas.drawBitmap(lock, drawX - offsetX, centerY - offsetY, null);
+		else if( drawX != leftX && drawX != rightX )
+			canvas.drawBitmap(handle, drawX - offsetX, centerY - offsetY, null);
 		sHolder.unlockCanvasAndPost(canvas);
 	}
 }
