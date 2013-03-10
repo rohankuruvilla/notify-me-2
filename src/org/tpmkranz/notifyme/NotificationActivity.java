@@ -56,6 +56,14 @@ public class NotificationActivity extends Activity {
 		super.onResume();
 		big = false;
 		notif = (Notification) ((TemporaryStorage)getApplicationContext()).getParcelable();
+		if( prefs.expandByDefault(filter) && android.os.Build.VERSION.SDK_INT >= 16 ){
+			try{
+				notif.bigContentView.hashCode();
+				big = true;
+			}catch(Exception e){
+				
+			}
+		}
 		showPopup();
 	}
 	

@@ -27,7 +27,6 @@ import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
@@ -61,11 +60,20 @@ public class NotificationSliderActivity extends Activity {
 		super.onCreate(savedInstanceState);
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onResume(){
 		super.onResume();
-		big = false;
 		notif = (Notification) ((TemporaryStorage)getApplicationContext()).getParcelable();
+		big = false;
+		if( prefs.expandByDefault(filter) && android.os.Build.VERSION.SDK_INT >= 16 ){
+			try{
+				notif.bigContentView.hashCode();
+				big = true;
+			}catch(Exception e){
+				
+			}
+		}
 		showPopup();
 	}
 	
@@ -83,8 +91,6 @@ public class NotificationSliderActivity extends Activity {
 		}catch(Exception e){
 			showPopup = false;
 		}
-		if( !((PowerManager)getSystemService(POWER_SERVICE)).isScreenOn() )
-			showPopup = false;
 		if( showPopup ){
 			pView = (ViewGroup) ((LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.slider_popup, null);
 			nView = remViews.apply(this, pView);
@@ -106,23 +112,23 @@ public class NotificationSliderActivity extends Activity {
 			sView.setZOrderOnTop(true);
 			dialog = new AlertDialog.Builder(this).setView(pView).setInverseBackgroundForced(prefs.isBackgroundColorInverted()).create();
 			dialog.setCanceledOnTouchOutside(false);
-			dialog.setOnCancelListener(
-				new DialogInterface.OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						finish();
-					}
-				}
-			);
 			dTask.cancel(true);
 			dTask = new DrawTask();
 			dTask.execute();
 		}else{
 			dialog = new AlertDialog.Builder(this).create();
 		}
+		dialog.setOnCancelListener(
+			new DialogInterface.OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					finish();
+				}
+			}
+		);
 		dialog.show();
 		if( !showPopup ){
-			dialog.dismiss();
+			dialog.cancel();
 		}
 	}
 	
@@ -211,10 +217,6 @@ public class NotificationSliderActivity extends Activity {
 		@SuppressLint("NewApi")
 		@Override
 		public boolean onFling(MotionEvent ev1, MotionEvent ev2, float vX, float vY){
-/*			a[0] = ev1.getX();
-			a[1] = ev1.getY();
-			b[0] = sView.centerX;
-			b[1] = sView.centerY;*/
 			if( sView.dist(a, b) < sView.offsetY ){
 				if( ev2.getX() <= sView.leftX && triggers )
 					dialog.cancel();

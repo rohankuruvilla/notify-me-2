@@ -46,6 +46,10 @@ public class EditFilterActivity extends Activity {
 	LinearLayout popupCaption;
 	CheckBox expansionCheckbox;
 	LinearLayout expansionCaption;
+	CheckBox expandedCheckbox;
+	LinearLayout expandedCaption;
+	CheckBox lightUpCheckbox;
+	LinearLayout lightUpCaption;
 	int filter;
 	String app;
 	PackageManager packMan;
@@ -69,6 +73,10 @@ public class EditFilterActivity extends Activity {
 		popupCaption = (LinearLayout) findViewById(R.id.editor_popup_caption);
 		expansionCheckbox = (CheckBox) findViewById(R.id.editor_expansion_checkbox);
 		expansionCaption = (LinearLayout) findViewById(R.id.editor_expansion_caption);
+		expandedCheckbox = (CheckBox) findViewById(R.id.editor_expanded_checkbox);
+		expandedCaption = (LinearLayout) findViewById(R.id.editor_expanded_caption);
+		lightUpCheckbox = (CheckBox) findViewById(R.id.editor_lightup_checkbox);
+		lightUpCaption = (LinearLayout) findViewById(R.id.editor_lightup_caption);
 		if( getIntent().getAction().equals("edit") ){
 			filter = getIntent().getIntExtra("filter", 0);
 			app = prefs.getFilterApp(filter);
@@ -82,8 +90,10 @@ public class EditFilterActivity extends Activity {
 	@Override
 	protected void onResume(){
 		super.onResume();
-		if( android.os.Build.VERSION.SDK_INT < 16 )
+		if( android.os.Build.VERSION.SDK_INT < 16 ){
 			findViewById(R.id.editor_expansion).setVisibility(View.GONE);
+			findViewById(R.id.editor_expanded).setVisibility(View.GONE);
+		}
 		if( app != null ){
 			try {
 				ApplicationInfo appInfo = packMan.getApplicationInfo(app, 0);
@@ -99,8 +109,10 @@ public class EditFilterActivity extends Activity {
 						keywordsEditor.setText(keywordsEditor.getText()+keywords[i]+"\n");
 					keywordsEditor.setText(keywordsEditor.getText()+keywords[keywords.length-1]);
 					keywordsEditor.setEnabled(true);
+					keywordsEditor.setFocusableInTouchMode(true);
 				}else{
 					keywordsEditor.setEnabled(false);
+					keywordsEditor.setFocusable(false);
 				}
 				keywordsCaption.setEnabled(true);
 				keywordsCaption.getChildAt(0).setEnabled(true);
@@ -111,6 +123,12 @@ public class EditFilterActivity extends Activity {
 				popupCaption.getChildAt(0).setEnabled(true);
 				popupCaption.getChildAt(1).setEnabled(true);
 				expansionCheckbox.setChecked(prefs.isExpansionAllowed(filter));
+				expandedCheckbox.setChecked(prefs.expandByDefault(filter));
+				lightUpCheckbox.setEnabled(true);
+				lightUpCheckbox.setChecked(prefs.isLightUpAllowed(filter));
+				lightUpCaption.setEnabled(true);
+				lightUpCaption.getChildAt(0).setEnabled(true);
+				lightUpCaption.getChildAt(1).setEnabled(true);
 			}catch(Exception e){
 				finish();
 			}
@@ -118,6 +136,7 @@ public class EditFilterActivity extends Activity {
 			keywordsCheckbox.setEnabled(false);
 			keywordsCheckbox.setChecked(false);
 			keywordsEditor.setEnabled(false);
+			keywordsEditor.setFocusable(false);
 			keywordsEditor.setText("");
 			keywordsCaption.setEnabled(false);
 			keywordsCaption.getChildAt(0).setEnabled(false);
@@ -128,12 +147,22 @@ public class EditFilterActivity extends Activity {
 			popupCaption.getChildAt(0).setEnabled(false);
 			popupCaption.getChildAt(1).setEnabled(false);
 			expansionCheckbox.setChecked(false);
+			expandedCheckbox.setChecked(false);
+			lightUpCheckbox.setEnabled(false);
+			lightUpCheckbox.setChecked(false);
+			lightUpCaption.setEnabled(false);
+			lightUpCaption.getChildAt(0).setEnabled(false);
+			lightUpCaption.getChildAt(1).setEnabled(false);
 			appNameView.setText(R.string.editor_app_chooser_title);
 		}
 		expansionCheckbox.setEnabled(popupCheckbox.isChecked());
 		expansionCaption.setEnabled(popupCheckbox.isChecked());
 		expansionCaption.getChildAt(0).setEnabled(popupCheckbox.isChecked());
 		expansionCaption.getChildAt(1).setEnabled(popupCheckbox.isChecked());
+		expandedCheckbox.setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		expandedCaption.setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		expandedCaption.getChildAt(0).setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		expandedCaption.getChildAt(1).setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
 	}
 	
 	@Override
@@ -152,6 +181,8 @@ public class EditFilterActivity extends Activity {
 		if( view.equals(keywordsCaption) )
 			keywordsCheckbox.toggle();
 		keywordsEditor.setEnabled(keywordsCheckbox.isChecked());
+		keywordsEditor.setFocusable(keywordsCheckbox.isChecked());
+		keywordsEditor.setFocusableInTouchMode(keywordsCheckbox.isChecked());
 		changed = true;
 		if( android.os.Build.VERSION.SDK_INT >= 11 )
 			invalidateOptionsMenu();
@@ -166,15 +197,43 @@ public class EditFilterActivity extends Activity {
 		expansionCaption.setEnabled(popupCheckbox.isChecked());
 		expansionCaption.getChildAt(0).setEnabled(popupCheckbox.isChecked());
 		expansionCaption.getChildAt(1).setEnabled(popupCheckbox.isChecked());
+		expandedCheckbox.setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		expandedCheckbox.setChecked(false);
+		expandedCaption.setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		expandedCaption.getChildAt(0).setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		expandedCaption.getChildAt(1).setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		changed = true;
+		if( android.os.Build.VERSION.SDK_INT >= 11 )
+			invalidateOptionsMenu();
+	}
+
+	@SuppressLint("NewApi")
+	public void checkTheExpansionBox(View view){
+		if( view.equals(expansionCaption) )
+			expansionCheckbox.toggle();
+		expandedCheckbox.setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		expandedCheckbox.setChecked(false);
+		expandedCaption.setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		expandedCaption.getChildAt(0).setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		expandedCaption.getChildAt(1).setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		changed = true;
+		if( android.os.Build.VERSION.SDK_INT >= 11 )
+			invalidateOptionsMenu();
+	}
+
+	@SuppressLint("NewApi")
+	public void checkTheExpandedBox(View view){
+		if( view.equals(expandedCaption) )
+			expandedCheckbox.toggle();
 		changed = true;
 		if( android.os.Build.VERSION.SDK_INT >= 11 )
 			invalidateOptionsMenu();
 	}
 	
 	@SuppressLint("NewApi")
-	public void checkTheExpansionBox(View view){
-		if( view.equals(expansionCaption) )
-			expansionCheckbox.toggle();
+	public void checkTheLightUpBox(View view){
+		if( view.equals(lightUpCaption) )
+			lightUpCheckbox.toggle();
 		changed = true;
 		if( android.os.Build.VERSION.SDK_INT >= 11 )
 			invalidateOptionsMenu();
@@ -197,16 +256,24 @@ public class EditFilterActivity extends Activity {
 	
 	void apply(){
 		if( filter == prefs.getNumberOfFilters() ){
+			if( !popupCheckbox.isChecked() && !lightUpCheckbox.isChecked() ){
+				Toast.makeText(this, R.string.editor_nonsense_toast1, Toast.LENGTH_LONG).show();
+				return;
+			}
 			if( keywordsCheckbox.isChecked() && !keywordsEditor.getText().toString().equals("") ){
-				prefs.addFilter(app, popupCheckbox.isChecked(), expansionCheckbox.isChecked(), produceKeywords());
+				prefs.addFilter(app, popupCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked(), produceKeywords());
 			}else{
-				prefs.addFilter(app, popupCheckbox.isChecked(), expansionCheckbox.isChecked());
+				prefs.addFilter(app, popupCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked());
 			}
 		}else{
+			if( !popupCheckbox.isChecked() && !lightUpCheckbox.isChecked() ){
+				Toast.makeText(this, R.string.editor_nonsense_toast2, Toast.LENGTH_LONG).show();
+				return;
+			}
 			if( keywordsCheckbox.isChecked() && !keywordsEditor.getText().toString().equals("") ){
-				prefs.editFilter(filter, app, popupCheckbox.isChecked(), expansionCheckbox.isChecked(), produceKeywords());
+				prefs.editFilter(filter, app, popupCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked(), produceKeywords());
 			}else{
-				prefs.editFilter(filter, app, popupCheckbox.isChecked(), expansionCheckbox.isChecked());
+				prefs.editFilter(filter, app, popupCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked());
 			}
 		}
 		finish();

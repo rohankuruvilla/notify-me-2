@@ -22,8 +22,12 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.app.Notification;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.PowerManager;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
@@ -34,6 +38,20 @@ public class NotificationService extends AccessibilityService {
 
 	Prefs prefs;
 	int filter;
+	private BroadcastReceiver receiver = new BroadcastReceiver(){
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+			if( ((TelephonyManager)arg0.getSystemService(Context.TELEPHONY_SERVICE)).getCallState() != 0 ){
+				arg0.unregisterReceiver(this);
+				return;
+			}
+			if( prefs.isInterfaceSlider() )
+				startActivity(new Intent(arg0, NotificationSliderActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
+			else
+				startActivity(new Intent(arg0, NotificationActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
+			arg0.unregisterReceiver(this);
+		}
+	};
 	
 	@Override
 	public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -44,7 +62,7 @@ public class NotificationService extends AccessibilityService {
 		}
 		if( !event.getClassName().equals("android.app.Notification") || ( ((PowerManager)getSystemService(POWER_SERVICE)).isScreenOn() && !((KeyguardManager)getSystemService(KEYGUARD_SERVICE)).inKeyguardRestrictedInputMode() ) )
 			return;
-		if(filterMatch(event)) triggerNotification(event);
+		if( filterMatch(event) && ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getCallState() == 0 ) triggerNotification(event);
 	}
 
 	@SuppressLint("NewApi")
@@ -107,12 +125,22 @@ public class NotificationService extends AccessibilityService {
 	}
 
 	private void triggerNotification(AccessibilityEvent event) {
+		try{
+			unregisterReceiver(receiver);
+		}catch(Exception e){
+			
+		}
 		((TemporaryStorage)getApplicationContext()).storeStuff(event.getParcelableData());
 		((TemporaryStorage)getApplicationContext()).storeStuff(filter);
-		if( prefs.isInterfaceSlider() )
+		if( prefs.isInterfaceSlider() && ( prefs.isLightUpAllowed(filter) || ((PowerManager)getSystemService(POWER_SERVICE)).isScreenOn() ) )
 			startActivity(new Intent(this, NotificationSliderActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
-		else
+		else if( prefs.isLightUpAllowed(filter) || ((PowerManager)getSystemService(POWER_SERVICE)).isScreenOn() )
 			startActivity(new Intent(this, NotificationActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
+		else{
+			IntentFilter filter = new IntentFilter();
+			filter.addAction(Intent.ACTION_SCREEN_ON);
+			registerReceiver(receiver, filter);
+		}
 	}
 
 	@Override

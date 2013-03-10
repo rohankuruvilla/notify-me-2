@@ -17,7 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:onClick="chooseApp" >
+        android:onClick="chooseApp"
+        android:focusable="true"
+        android:background="@android:drawable/list_selector_background" >
 
         <ImageView
             android:id="@+id/editor_app_chooser_button"
@@ -25,30 +27,27 @@
             android:layout_height="36dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:clickable="true"
-            android:src="@android:drawable/ic_menu_add"
-            android:onClick="chooseApp" />
+            android:clickable="false"
+            android:src="@android:drawable/ic_menu_add" />
 
         <ImageView
             android:id="@+id/editor_chosen_app_icon"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:clickable="true"
+            android:clickable="false"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:onClick="chooseApp" />
+            android:layout_centerVertical="true" />
 
         <TextView
             android:id="@+id/editor_chosen_app_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:clickable="true"
+            android:clickable="false"
             android:layout_marginRight="6dp"
             android:layout_toLeftOf="@id/editor_chosen_app_icon"
             android:layout_toRightOf="@id/editor_app_chooser_button"
-            android:gravity="right"
-            android:onClick="chooseApp" />
+            android:gravity="right" />
     </RelativeLayout>
 
     <RelativeLayout 
@@ -125,11 +124,85 @@
         </LinearLayout>
     </RelativeLayout>
     
+    <RelativeLayout 
+        android:id="@+id/editor_expanded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editor_expansion"
+        android:layout_marginTop="6dp">
+        
+        <CheckBox 
+            android:id="@+id/editor_expanded_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:onClick="checkTheExpandedBox"/>
+
+        <LinearLayout 
+            android:id="@+id/editor_expanded_caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="checkTheExpandedBox"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/editor_expanded_checkbox"
+            android:addStatesFromChildren="true"
+            android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/editor_expanded_title"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/editor_expanded_description" />
+        </LinearLayout>
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/editor_lightup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editor_expanded"
+        android:layout_marginTop="6dp">
+        
+        <CheckBox 
+            android:id="@+id/editor_lightup_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:onClick="checkTheLightUpBox"/>
+
+        <LinearLayout 
+            android:id="@+id/editor_lightup_caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="checkTheLightUpBox"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/editor_lightup_checkbox"
+            android:addStatesFromChildren="true"
+            android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/editor_lightup_title"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/editor_lightup_description" />
+        </LinearLayout>
+    </RelativeLayout>
+    
     <RelativeLayout
         android:id="@+id/editor_keywords"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editor_expansion"
+        android:layout_below="@id/editor_lightup"
         android:layout_marginTop="6dp" >
 
         <CheckBox
@@ -166,7 +239,8 @@
         android:id="@+id/editor_keywords_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editor_keywords" />
+        android:layout_below="@id/editor_keywords"
+        android:focusable="false" />
 
 </RelativeLayout>
 </ScrollView>
