@@ -18,5 +18,6 @@
     </style>
 
     <style name="DialogTheme" parent="android:Theme.Dialog"></style>
-    <style name="Transparent" parent="android:Theme.Wallpaper.NoTitleBar"></style>
+    <style name="TransparentWP" parent="android:Theme.Wallpaper.NoTitleBar"></style>
+    <style name="Transparent" parent="android:Theme.Translucent.NoTitleBar"></style>
 </resources>

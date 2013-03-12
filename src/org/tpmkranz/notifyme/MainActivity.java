@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -275,6 +276,8 @@ public class MainActivity extends Activity {
 				return true;
 			case R.id.main_menu_popup:
 				final View view = ((LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.main_menu_popup, null);
+				if( android.os.Build.VERSION.SDK_INT >= 11 )
+					view.findViewById(R.id.main_menu_popup_background).setVisibility(View.GONE);
 				((CheckBox)view.findViewById(R.id.main_menu_popup_background_checkbox)).setChecked(prefs.isBackgroundColorInverted());
 				view.findViewById(R.id.main_menu_popup_background_caption).setOnClickListener(
 					new View.OnClickListener() {
@@ -421,6 +424,30 @@ public class MainActivity extends Activity {
 				((EditText)view.findViewById(R.id.main_menu_popup_color_edit_r)).setText(String.valueOf(prefs.getSliderBackgroundR()));
 				((EditText)view.findViewById(R.id.main_menu_popup_color_edit_g)).setText(String.valueOf(prefs.getSliderBackgroundG()));
 				((EditText)view.findViewById(R.id.main_menu_popup_color_edit_b)).setText(String.valueOf(prefs.getSliderBackgroundB()));
+				((EditText)view.findViewById(R.id.main_menu_popup_timeout_editor)).setText(( prefs.getScreenTimeout() == 0L ? "" : String.valueOf(prefs.getScreenTimeout()/1000L) ));
+				((EditText)view.findViewById(R.id.main_menu_popup_timeout_editor)).addTextChangedListener(
+					new TextWatcher(){
+						@Override
+						public void afterTextChanged(Editable s) {
+							if( s.toString().equals("") )
+								return;
+							try{
+								if( Long.parseLong(s.toString()) > 9999L )
+									s.replace(0, s.length(), "9999");
+								else if( Long.parseLong(s.toString()) < 0L )
+									s.replace(0, s.length(), "0");
+							}catch(Exception e){
+								s.clear();
+							}
+						}
+						@Override
+						public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+						}
+						@Override
+						public void onTextChanged(CharSequence s, int start, int before, int count) {
+						}
+					}
+				);
 				((CheckBox)view.findViewById(R.id.main_menu_popup_interface_checkbox)).setChecked(prefs.isInterfaceSlider());
 				((CheckBox)view.findViewById(R.id.main_menu_popup_interface_checkbox)).setOnClickListener(
 					new View.OnClickListener() {
@@ -462,6 +489,7 @@ public class MainActivity extends Activity {
 							prefs.setBackgroundColorInverted(((CheckBox)view.findViewById(R.id.main_menu_popup_background_checkbox)).isChecked());
 							prefs.setInterfaceSlider(((CheckBox)view.findViewById(R.id.main_menu_popup_interface_checkbox)).isChecked());
 							prefs.setSliderBackground(((SeekBar)view.findViewById(R.id.main_menu_popup_color_slider_r)).getProgress(), ((SeekBar)view.findViewById(R.id.main_menu_popup_color_slider_g)).getProgress(), ((SeekBar)view.findViewById(R.id.main_menu_popup_color_slider_b)).getProgress());
+							prefs.setScreenTimeout(( ((EditText)view.findViewById(R.id.main_menu_popup_timeout_editor)).getText().toString().equals("") ? 0L : Long.parseLong(((EditText)view.findViewById(R.id.main_menu_popup_timeout_editor)).getText().toString())*1000L ));
 						}
 					}
 				).setNegativeButton("Cancel", null).show();
@@ -472,28 +500,18 @@ public class MainActivity extends Activity {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://code.google.com/p/notify-me/")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+							startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://forum.xda-developers.com/showthread.php?t=2173226")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 						}
 					}
 				).show();
 				return true;
 			case R.id.main_menu_about:
-				new AlertDialog.Builder(this).setMessage(R.string.main_menu_about_message).setTitle(R.string.main_menu_about_title)
-				.setPositiveButton(R.string.main_menu_about_ok_button, null).setNegativeButton(R.string.main_menu_about_donate_button,
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WB8TZ36M36L3Q")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-						}
-					}
-				).setNeutralButton(R.string.main_menu_about_license_button,
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.gnu.org/licenses/")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-						}
-					}
-				).show();
+				TextView about = new TextView(this);
+				about.setTextSize(16);
+				about.setText(R.string.main_menu_about_message);
+				about.setMovementMethod(LinkMovementMethod.getInstance());
+				new AlertDialog.Builder(this).setView(about).setTitle(R.string.main_menu_about_title)
+				.setPositiveButton(R.string.main_menu_about_ok_button, null).show();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

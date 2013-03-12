@@ -25,7 +25,8 @@
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="17" />
-
+    <uses-permission 
+        android:name="android.permission.WRITE_SETTINGS"/>
     <application
         android:name="org.tpmkranz.notifyme.TemporaryStorage"
         android:allowBackup="true"
@@ -72,21 +73,21 @@
             android:excludeFromRecents="true"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:theme="@style/Transparent" >
+            android:theme="@style/TransparentWP" >
         </activity>
         <activity
             android:name="org.tpmkranz.notifyme.Unlock"
             android:excludeFromRecents="true"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:theme="@style/Transparent" >
+            android:theme="@style/TransparentWP" >
         </activity>
         <activity
-            android:name="org.tpmkranz.notifyme.NotificationSliderActivity"
+            android:name="org.tpmkranz.notifyme.NotificationActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:theme="@style/Transparent" >
+            android:theme="@style/TransparentWP" >
         </activity>
     </application>
 

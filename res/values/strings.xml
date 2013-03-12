@@ -8,6 +8,8 @@
     <string name="editor_keywords_description">Only catch notifications that contain at least one of the following keywords or -phrases (one word/phrase per line):</string>
     <string name="editor_popup_title">Show popups</string>
     <string name="editor_popup_description">Show popups for notifications that this app spawns.</string>
+    <string name="editor_aggressive_title">Aggressive popups</string>
+    <string name="editor_aggressive_description">Allow popups to appear even if your screen is on and unlocked. This might interrupt your workflow, use this option wisely.</string>
     <string name="editor_expansion_title">Allow expansion</string>
     <string name="editor_expansion_description">Allow expansion of notifications that provide a bigger view.</string>
     <string name="editor_expanded_title">Expand by default</string>
@@ -38,7 +40,9 @@
     <string name="main_menu_checkaccessibility">Check AccessibilityService</string>
     <string name="main_menu_popup">Popup preferences</string>
     <string name="main_menu_popup_background_title">Invert background color</string>
-    <string name="main_menu_popup_background_description">If the popup\'s background color makes the notification\'s text unreadable, try inverting the background color. This should only affect Android versions &lt;&#160;3.</string>
+    <string name="main_menu_popup_background_description">If the popup\'s background color makes the notification\'s text unreadable, try inverting the background color.</string>
+    <string name="main_menu_popup_timeout_title">Custom screen timeout</string>
+    <string name="main_menu_popup_timeout_description">Set a timeout for the screen light after a popup has lit it up. If you leave the field empty or set the timeout 0, the system default timeout will be used.</string>
     <string name="main_menu_popup_interface_title">Slider interface</string>
     <string name="main_menu_popup_interface_description">Show a slider instead of buttons to interact with the popup.</string>
     <string name="main_menu_popup_color_description">Set the background color for the slider</string>
@@ -48,19 +52,13 @@
     <string name="main_menu_help_ok_button">Got it!</string>
     <string name="main_menu_help_question_button">There\'s a question left&#8230;</string>
     <string name="main_menu_about">About this app</string>
-    <string name="main_menu_about_message">An app to enhance Android&#8482;\'s abilities to show notifications.\nCopyright &#169; 2013 Tom Kranz\nThis program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under the conditions of the GPLv3 or (at your option) later versions; tap the \"GPL?\" button for details.\nAndroid is a trademark of Google Inc.</string>
+    <string name="main_menu_about_message">An app to enhance Android&#8482;\'s abilities to show notifications.\nCopyright &#169; 2013 Tom Kranz\nThis program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under the conditions of the GPLv3 or (at your option) later versions; visit <a href="http://www.gnu.org/licenses/">gnu.org/licenses</a> for details.\nAndroid is a trademark of Google Inc.</string>
     <string name="main_menu_about_title">About Notify Me!</string>
     <string name="main_menu_about_ok_button">Okay, cool thing</string>
-    <string name="main_menu_about_license_button">GPL?</string>
-    <string name="main_menu_about_donate_button">Buy me a soy milk</string>
     <string name="notification_view_button">View</string>
     <string name="notification_dismiss_button">Dismiss</string>
     <string name="notification_collapse_button">Collapse</string>
     <string name="notification_expand_button">Expand</string>
     <string name="accessibility_service_description">Enable this service to use Notify Me!. Otherwise it would not be able to register any notifications, which would render the app useless.</string>
-    <string name="title_activity_unlock">Unlock</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_notification_slider">NotificationSliderActivity</string>
 
 </resources>

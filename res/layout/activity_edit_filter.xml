@@ -86,12 +86,48 @@
             android:text="@string/editor_popup_description" />
         </LinearLayout>
     </RelativeLayout>
+    <RelativeLayout 
+        android:id="@+id/editor_aggressive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editor_popup"
+        android:layout_marginTop="6dp">
+        
+        <CheckBox 
+            android:id="@+id/editor_aggressive_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:onClick="checkTheAggressiveBox"/>
+
+        <LinearLayout 
+            android:id="@+id/editor_aggressive_caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="checkTheAggressiveBox"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/editor_aggressive_checkbox"
+            android:addStatesFromChildren="true"
+            android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/editor_aggressive_title"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/editor_aggressive_description" />
+        </LinearLayout>
+    </RelativeLayout>
     
     <RelativeLayout 
         android:id="@+id/editor_expansion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editor_popup"
+        android:layout_below="@id/editor_aggressive"
         android:layout_marginTop="6dp">
         
         <CheckBox 

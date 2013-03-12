@@ -43,12 +43,12 @@ import android.widget.Toast;
 public class AppPicker extends Activity{
 
 	PackageManager packMan;
-	List<ApplicationInfo> appInfos;
-	Drawable[] icons;
-	String[] appNames, appPackages;
+	static List<ApplicationInfo> appInfos;
+	static Drawable[] icons;
+	static String[] appNames, appPackages;
 	ProgressDialog plsWait;
 	GetAppList stuff;
-	boolean ready = false;
+	boolean ready;
 	int filter;
 	
 	@Override
@@ -58,12 +58,18 @@ public class AppPicker extends Activity{
 		filter = getIntent().getIntExtra("filter", -1);
 		plsWait = new ProgressDialog(this);
 		plsWait.setCancelable(false);
+		stuff = new GetAppList();
 	}
 	
 	@Override
 	protected void onStart(){
 		super.onStart();
-		stuff = new GetAppList();
+		if( appInfos != null ){
+			if( appNames[appInfos.size()-1] != null ){
+				ready = true;
+				return;
+			}
+		}
 		stuff.execute();
 	}
 

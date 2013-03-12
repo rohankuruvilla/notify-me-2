@@ -44,6 +44,8 @@ public class EditFilterActivity extends Activity {
 	LinearLayout keywordsCaption;
 	CheckBox popupCheckbox;
 	LinearLayout popupCaption;
+	CheckBox aggressiveCheckbox;
+	LinearLayout aggressiveCaption;
 	CheckBox expansionCheckbox;
 	LinearLayout expansionCaption;
 	CheckBox expandedCheckbox;
@@ -71,6 +73,8 @@ public class EditFilterActivity extends Activity {
 		keywordsCaption = (LinearLayout) findViewById(R.id.editor_keywords_caption);
 		popupCheckbox = (CheckBox) findViewById(R.id.editor_popup_checkbox);
 		popupCaption = (LinearLayout) findViewById(R.id.editor_popup_caption);
+		aggressiveCheckbox = (CheckBox) findViewById(R.id.editor_aggressive_checkbox);
+		aggressiveCaption = (LinearLayout) findViewById(R.id.editor_aggressive_caption);
 		expansionCheckbox = (CheckBox) findViewById(R.id.editor_expansion_checkbox);
 		expansionCaption = (LinearLayout) findViewById(R.id.editor_expansion_caption);
 		expandedCheckbox = (CheckBox) findViewById(R.id.editor_expanded_checkbox);
@@ -122,6 +126,7 @@ public class EditFilterActivity extends Activity {
 				popupCaption.setEnabled(true);
 				popupCaption.getChildAt(0).setEnabled(true);
 				popupCaption.getChildAt(1).setEnabled(true);
+				aggressiveCheckbox.setChecked(prefs.isAggressive(filter));
 				expansionCheckbox.setChecked(prefs.isExpansionAllowed(filter));
 				expandedCheckbox.setChecked(prefs.expandByDefault(filter));
 				lightUpCheckbox.setEnabled(true);
@@ -146,6 +151,7 @@ public class EditFilterActivity extends Activity {
 			popupCaption.setEnabled(false);
 			popupCaption.getChildAt(0).setEnabled(false);
 			popupCaption.getChildAt(1).setEnabled(false);
+			aggressiveCheckbox.setChecked(false);
 			expansionCheckbox.setChecked(false);
 			expandedCheckbox.setChecked(false);
 			lightUpCheckbox.setEnabled(false);
@@ -155,6 +161,10 @@ public class EditFilterActivity extends Activity {
 			lightUpCaption.getChildAt(1).setEnabled(false);
 			appNameView.setText(R.string.editor_app_chooser_title);
 		}
+		aggressiveCheckbox.setEnabled(popupCheckbox.isChecked());
+		aggressiveCaption.setEnabled(popupCheckbox.isChecked());
+		aggressiveCaption.getChildAt(0).setEnabled(popupCheckbox.isChecked());
+		aggressiveCaption.getChildAt(1).setEnabled(popupCheckbox.isChecked());
 		expansionCheckbox.setEnabled(popupCheckbox.isChecked());
 		expansionCaption.setEnabled(popupCheckbox.isChecked());
 		expansionCaption.getChildAt(0).setEnabled(popupCheckbox.isChecked());
@@ -169,6 +179,7 @@ public class EditFilterActivity extends Activity {
 	public void onBackPressed(){
 		if( app == null || !changed || (System.currentTimeMillis()-lastBackPress < 3500L) ){
 			leaveToast.cancel();
+			AppPicker.appInfos = null;
 			finish();
 			return;
 		}
@@ -192,6 +203,11 @@ public class EditFilterActivity extends Activity {
 	public void checkThePopupBox(View view){
 		if( view.equals(popupCaption) )
 			popupCheckbox.toggle();
+		aggressiveCheckbox.setEnabled(popupCheckbox.isChecked());
+		aggressiveCheckbox.setChecked(false);
+		aggressiveCaption.setEnabled(popupCheckbox.isChecked());
+		aggressiveCaption.getChildAt(0).setEnabled(popupCheckbox.isChecked());
+		aggressiveCaption.getChildAt(1).setEnabled(popupCheckbox.isChecked());
 		expansionCheckbox.setEnabled(popupCheckbox.isChecked());
 		expansionCheckbox.setChecked(popupCheckbox.isChecked());
 		expansionCaption.setEnabled(popupCheckbox.isChecked());
@@ -202,6 +218,15 @@ public class EditFilterActivity extends Activity {
 		expandedCaption.setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
 		expandedCaption.getChildAt(0).setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
 		expandedCaption.getChildAt(1).setEnabled(popupCheckbox.isChecked() && expansionCheckbox.isChecked());
+		changed = true;
+		if( android.os.Build.VERSION.SDK_INT >= 11 )
+			invalidateOptionsMenu();
+	}
+
+	@SuppressLint("NewApi")
+	public void checkTheAggressiveBox(View view){
+		if( view.equals(aggressiveCaption) )
+			aggressiveCheckbox.toggle();
 		changed = true;
 		if( android.os.Build.VERSION.SDK_INT >= 11 )
 			invalidateOptionsMenu();
@@ -261,9 +286,9 @@ public class EditFilterActivity extends Activity {
 				return;
 			}
 			if( keywordsCheckbox.isChecked() && !keywordsEditor.getText().toString().equals("") ){
-				prefs.addFilter(app, popupCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked(), produceKeywords());
+				prefs.addFilter(app, popupCheckbox.isChecked(), aggressiveCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked(), produceKeywords());
 			}else{
-				prefs.addFilter(app, popupCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked());
+				prefs.addFilter(app, popupCheckbox.isChecked(), aggressiveCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked());
 			}
 		}else{
 			if( !popupCheckbox.isChecked() && !lightUpCheckbox.isChecked() ){
@@ -271,9 +296,9 @@ public class EditFilterActivity extends Activity {
 				return;
 			}
 			if( keywordsCheckbox.isChecked() && !keywordsEditor.getText().toString().equals("") ){
-				prefs.editFilter(filter, app, popupCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked(), produceKeywords());
+				prefs.editFilter(filter, app, popupCheckbox.isChecked(), aggressiveCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked(), produceKeywords());
 			}else{
-				prefs.editFilter(filter, app, popupCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked());
+				prefs.editFilter(filter, app, popupCheckbox.isChecked(), aggressiveCheckbox.isChecked(), expansionCheckbox.isChecked(), expandedCheckbox.isChecked(), lightUpCheckbox.isChecked());
 			}
 		}
 		finish();
@@ -321,13 +346,16 @@ public class EditFilterActivity extends Activity {
 		leaveToast.cancel();
 		switch( item.getItemId() ){
 			case R.id.editor_menu_apply:
+				AppPicker.appInfos = null;
 				apply();
 				return true;
 			case R.id.editor_menu_discard:
+				AppPicker.appInfos = null;
 				finish();
 				return true;
 			case R.id.editor_menu_remove:
 				prefs.removeFilter(filter);
+				AppPicker.appInfos = null;
 				finish();
 				return true;
 			default:

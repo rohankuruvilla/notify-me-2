@@ -23,6 +23,7 @@ import android.os.Parcelable;
 public class TemporaryStorage extends Application {
 	private static Parcelable storedP;
 	private static int filter;
+	private static long timeout;
 	@Override
 	public void onCreate(){
 		super.onCreate();
@@ -36,6 +37,10 @@ public class TemporaryStorage extends Application {
 		filter = filt;
 	}
 	
+	public void storeStuff(long time){
+		timeout = time;
+	}
+	
 	public Parcelable getParcelable(){
 		return storedP;
 	}
@@ -44,4 +49,7 @@ public class TemporaryStorage extends Application {
 		return filter;
 	}
 	
+	public long getTimeout(){
+		return timeout;
+	}
 }

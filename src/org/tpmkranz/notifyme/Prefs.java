@@ -59,6 +59,15 @@ public class Prefs {
 		edit.commit();
 	}
 	
+	protected long getScreenTimeout(){
+		return prefs.getLong("ScreenTimeout", 0L);
+	}
+	
+	protected void setScreenTimeout(long timeout){
+		edit.putLong("ScreenTimeout", timeout);
+		edit.commit();
+	}
+	
 	protected boolean isInterfaceSlider(){
 		return prefs.getBoolean("InterfaceSlider", true);
 	}
@@ -101,6 +110,10 @@ public class Prefs {
 		return prefs.getBoolean("filter"+String.valueOf(filter)+"Popup", true);
 	}
 	
+	protected boolean isAggressive(int filter){
+		return prefs.getBoolean("filter"+String.valueOf(filter)+"Aggressive", false);
+	}
+	
 	protected boolean isExpansionAllowed(int filter){
 		return prefs.getBoolean("filter"+String.valueOf(filter)+"Expansion", true);
 	}
@@ -122,10 +135,11 @@ public class Prefs {
 		return keywords;
 	}
 	
-	protected void addFilter(String app, boolean popupAllowed, boolean expansionAllowed, boolean expanded, boolean lightUpAllowed){
+	protected void addFilter(String app, boolean popupAllowed, boolean aggressive, boolean expansionAllowed, boolean expanded, boolean lightUpAllowed){
 		int filter = getNumberOfFilters();
 		edit.putString("filter"+String.valueOf(filter)+"App", app);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Popup", popupAllowed);
+		edit.putBoolean("filter"+String.valueOf(filter)+"Aggressive", aggressive);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Expansion", expansionAllowed);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Expanded", expanded);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Light", lightUpAllowed);
@@ -133,10 +147,11 @@ public class Prefs {
 		edit.commit();
 	}
 
-	protected void addFilter(String app, boolean popupAllowed, boolean expansionAllowed, boolean expanded, boolean lightUpAllowed, String[] keywords){
+	protected void addFilter(String app, boolean popupAllowed, boolean aggressive, boolean expansionAllowed, boolean expanded, boolean lightUpAllowed, String[] keywords){
 		int filter = getNumberOfFilters();
 		edit.putString("filter"+String.valueOf(filter)+"App", app);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Popup", popupAllowed);
+		edit.putBoolean("filter"+String.valueOf(filter)+"Aggressive", aggressive);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Expansion", expansionAllowed);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Expanded", expanded);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Light", lightUpAllowed);
@@ -151,26 +166,28 @@ public class Prefs {
 		edit.commit();
 	}
 	
-	protected void editFilter(int filter, String app, boolean popupAllowed, boolean expansionAllowed, boolean expanded, boolean lightUpAllowed){
+	protected void editFilter(int filter, String app, boolean popupAllowed, boolean aggressive, boolean expansionAllowed, boolean expanded, boolean lightUpAllowed){
 		for( int i = 0 ; i < prefs.getInt("filter"+String.valueOf(filter)+"numberOfKeywords", 0) ; i++ ){
 			edit.remove("filter"+String.valueOf(filter)+"Keyword"+String.valueOf(i));
 		}
 		edit.remove("filter"+String.valueOf(filter)+"numberOfKeywords");
 		edit.putString("filter"+String.valueOf(filter)+"App", app);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Popup", popupAllowed);
+		edit.putBoolean("filter"+String.valueOf(filter)+"Aggressive", aggressive);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Expansion", expansionAllowed);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Expanded", expanded);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Light", lightUpAllowed);
 		edit.commit();
 	}
 	
-	protected void editFilter(int filter, String app, boolean popupAllowed, boolean expansionAllowed, boolean expanded, boolean lightUpAllowed, String[] keywords){
+	protected void editFilter(int filter, String app, boolean popupAllowed, boolean aggressive, boolean expansionAllowed, boolean expanded, boolean lightUpAllowed, String[] keywords){
 		for( int i = 0 ; i < prefs.getInt("filter"+String.valueOf(filter)+"numberOfKeywords", 0) ; i++ ){
 			edit.remove("filter"+String.valueOf(filter)+"Keyword"+String.valueOf(i));
 		}
 		edit.remove("filter"+String.valueOf(filter)+"numberOfKeywords");
 		edit.putString("filter"+String.valueOf(filter)+"App", app);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Popup", popupAllowed);
+		edit.putBoolean("filter"+String.valueOf(filter)+"Aggressive", aggressive);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Expansion", expansionAllowed);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Expanded", expanded);
 		edit.putBoolean("filter"+String.valueOf(filter)+"Light", lightUpAllowed);
@@ -218,6 +235,7 @@ public class Prefs {
 	protected void removeFilter(int filter){
 		edit.remove("filter"+String.valueOf(filter)+"App");
 		edit.remove("filter"+String.valueOf(filter)+"Popup");
+		edit.remove("filter"+String.valueOf(filter)+"Aggressive");
 		edit.remove("filter"+String.valueOf(filter)+"Expansion");
 		edit.remove("filter"+String.valueOf(filter)+"Expanded");
 		edit.remove("filter"+String.valueOf(filter)+"Light");
@@ -230,6 +248,8 @@ public class Prefs {
 			edit.remove("filter"+String.valueOf(i)+"App");
 			edit.putBoolean("filter"+String.valueOf(i-1)+"Popup", isPopupAllowed(i));
 			edit.remove("filter"+String.valueOf(i)+"Popup");
+			edit.putBoolean("filter"+String.valueOf(i-1)+"Aggressive", isAggressive(i));
+			edit.remove("filter"+String.valueOf(i)+"Aggressive");
 			edit.putBoolean("filter"+String.valueOf(i-1)+"Expansion", isExpansionAllowed(i));
 			edit.remove("filter"+String.valueOf(i)+"Expansion");
 			edit.putBoolean("filter"+String.valueOf(i-1)+"Expanded", expandByDefault(i));

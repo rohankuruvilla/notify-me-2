@@ -9,5 +9,6 @@
     </style>
 
     <style name="DialogTheme" parent="android:Theme.Holo.Dialog"></style>
+    <style name="TransparentWP" parent="android:Theme.Holo.Wallpaper.NoTitleBar"></style>
     <style name="Transparent" parent="android:Theme.Holo.Wallpaper.NoTitleBar"></style>
 </resources>

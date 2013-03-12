@@ -45,10 +45,7 @@ public class NotificationService extends AccessibilityService {
 				arg0.unregisterReceiver(this);
 				return;
 			}
-			if( prefs.isInterfaceSlider() )
-				startActivity(new Intent(arg0, NotificationSliderActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
-			else
-				startActivity(new Intent(arg0, NotificationActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
+			startActivity(new Intent(arg0, NotificationActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
 			arg0.unregisterReceiver(this);
 		}
 	};
@@ -60,19 +57,25 @@ public class NotificationService extends AccessibilityService {
 				prefs.setAccessibilityServiceRunning(true);
 			}
 		}
-		if( !event.getClassName().equals("android.app.Notification") || ( ((PowerManager)getSystemService(POWER_SERVICE)).isScreenOn() && !((KeyguardManager)getSystemService(KEYGUARD_SERVICE)).inKeyguardRestrictedInputMode() ) )
+		if( !event.getClassName().equals("android.app.Notification") )
 			return;
-		if( filterMatch(event) && ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getCallState() == 0 ) triggerNotification(event);
+		if( filterMatch(event, true) ){
+			if( prefs.isAggressive(filter) );
+			else if( ((PowerManager)getSystemService(POWER_SERVICE)).isScreenOn() && !((KeyguardManager)getSystemService(KEYGUARD_SERVICE)).inKeyguardRestrictedInputMode() )
+				return;
+		}else
+			return;
+		if( filterMatch(event, false) && ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getCallState() == 0 ) triggerNotification(event);
 	}
 
 	@SuppressLint("NewApi")
-	private boolean filterMatch(AccessibilityEvent event) {
+	private boolean filterMatch(AccessibilityEvent event, boolean nameOnly) {
 
 		boolean filterMatch = false;
 		for( int i = 0; i < prefs.getNumberOfFilters() && !filterMatch; i++ ){
 			if( event.getPackageName().equals(prefs.getFilterApp(i)) ){
 				filter = i;
-				if( prefs.hasFilterKeywords(i) ){
+				if( prefs.hasFilterKeywords(i) && !nameOnly ){
 					String notificationContents = ( event.getText().size() == 0 ? "" : event.getText().get(0).toString() );
 					try{
 						Notification notification = (Notification) event.getParcelableData();
@@ -132,9 +135,7 @@ public class NotificationService extends AccessibilityService {
 		}
 		((TemporaryStorage)getApplicationContext()).storeStuff(event.getParcelableData());
 		((TemporaryStorage)getApplicationContext()).storeStuff(filter);
-		if( prefs.isInterfaceSlider() && ( prefs.isLightUpAllowed(filter) || ((PowerManager)getSystemService(POWER_SERVICE)).isScreenOn() ) )
-			startActivity(new Intent(this, NotificationSliderActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
-		else if( prefs.isLightUpAllowed(filter) || ((PowerManager)getSystemService(POWER_SERVICE)).isScreenOn() )
+		if( ( prefs.isLightUpAllowed(filter) || ((PowerManager)getSystemService(POWER_SERVICE)).isScreenOn() ) )
 			startActivity(new Intent(this, NotificationActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
 		else{
 			IntentFilter filter = new IntentFilter();
