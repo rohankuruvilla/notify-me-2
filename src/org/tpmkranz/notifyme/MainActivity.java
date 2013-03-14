@@ -80,7 +80,7 @@ public class MainActivity extends Activity {
 			
 		}
 		prefs = new Prefs(this);
-		if( prefs.getPrevVersion() == 0 ){
+/*		if( prefs.getPrevVersion() == 0 ){
 			prefs.setAccessibilityServiceRunning(false);
 			prefs.setPrevVersion(version);
 		}else if( prefs.getPrevVersion() < version ){
@@ -89,8 +89,8 @@ public class MainActivity extends Activity {
 		}else if( prefs.getPrevVersion() > version ){
 			prefs.setAccessibilityServiceRunning(false);
 			prefs.setPrevVersion(version);
-		}
-		access = prefs.isAccessibilityServiceRunning();
+		}*/
+		access = ((TemporaryStorage)getApplicationContext()).hasAccess();
 	}
 
 	@Override
@@ -212,7 +212,7 @@ public class MainActivity extends Activity {
 			this.publishProgress(-1L);
 			long t = System.currentTimeMillis() ;
 			while( System.currentTimeMillis() - t < 3500L ){
-				if( prefs.isAccessibilityServiceRunning() ){
+				if( ((TemporaryStorage)getApplicationContext()).hasAccess() ){
 					return true;
 				}else{
 					publishProgress(System.currentTimeMillis()-t);
@@ -245,9 +245,9 @@ public class MainActivity extends Activity {
 				new DialogInterface.OnDismissListener(){
 					@Override
 					public void onDismiss(DialogInterface dialog) {
-						prefs.setAccessibilityServiceRunning(access);
 						if( access ){
 							finish();
+							prefs.setPrevVersion(version);
 							startActivity(getIntent());
 						}else{
 							startActivity(new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS));
@@ -256,6 +256,9 @@ public class MainActivity extends Activity {
 				}
 			);
 			aDialog.show();
+			if( access && prefs.getPrevVersion() == version ){
+				aDialog.dismiss();
+			}
 		}
 	}
 	
@@ -270,7 +273,8 @@ public class MainActivity extends Activity {
 		
 		switch(item.getItemId()){
 			case R.id.main_menu_checkaccessibility:
-				prefs.setAccessibilityServiceRunning(false);
+				prefs.setPrevVersion(0);
+				((TemporaryStorage)getApplicationContext()).accessGranted(false);
 				finish();
 				startActivity(getIntent());
 				return true;
@@ -506,10 +510,8 @@ public class MainActivity extends Activity {
 				).show();
 				return true;
 			case R.id.main_menu_about:
-				TextView about = new TextView(this);
-				about.setTextSize(16);
-				about.setText(R.string.main_menu_about_message);
-				about.setMovementMethod(LinkMovementMethod.getInstance());
+				ViewGroup about = (ViewGroup) ((LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.main_menu_about, null);
+				((TextView)about.getChildAt(0)).setMovementMethod(LinkMovementMethod.getInstance());
 				new AlertDialog.Builder(this).setView(about).setTitle(R.string.main_menu_about_title)
 				.setPositiveButton(R.string.main_menu_about_ok_button, null).show();
 				return true;

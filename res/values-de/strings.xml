@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Notify Me!</string>
+    <string name="title_activity_edit_filter">Listen-Editor</string>
+    <string name="editor_app_chooser_title">Wähle eine App</string>
+    <string name="editor_keywords_title">Stichwortfilter</string>
+    <string name="editor_keywords_description">Nur Benachrichtigungen, die mindestens eines der folgenden Stichwörter oder -phrasen enthalten, werden registriert (ein Wort/eine Phrase pro Zeile):</string>
+    <string name="editor_popup_title">Popups anzeigen</string>
+    <string name="editor_popup_description">Zeige Popups für Benachrichtigungen an, die diese App sendet.</string>
+    <string name="editor_aggressive_title">Aggressive Popups</string>
+    <string name="editor_aggressive_description">Popups dürfen auch erscheinen, wenn der Bildschirm an und nicht gesperrt ist. Dies kann den Arbeitsfluss massiv stören, benutze diese Option mit Bedacht.</string>
+    <string name="editor_expansion_title">Ausklappen erlauben</string>
+    <string name="editor_expansion_description">Erlaube das Ausklappen von Benachrichtigungen, die eine größe Ansicht bieten.</string>
+    <string name="editor_expanded_title">Standardmäßig ausklappen</string>
+    <string name="editor_expanded_description">Klappe Benachrichtigungen mit einer größeren Ansicht aus, sobald ihr Popup erscheint.</string>
+    <string name="editor_lightup_title">Bildschirm aufleuchten</string>
+    <string name="editor_lightup_description">Bildschirm leuchtet auf, wenn diese App eine Benachrichtigung sendet.</string>
+    <string name="editor_menu_apply">Fertig, anwenden</string>
+    <string name="editor_menu_apply0">Fertig, hinzufügen</string>
+    <string name="editor_menu_discard">Verwerfen</string>
+    <string name="editor_menu_discard0">Verwerfen</string>
+    <string name="editor_menu_remove">Von der Liste entfernen</string>
+    <string name="editor_leave_toast">Drücke nochmal Zurück, um deine Einstellungen zu verwerfen. Wenn das nicht deine Absicht ist, schau in das Menü.</string>
+    <string name="editor_nonsense_toast1">Wenn du gar keine Aktion zulassen willst, solltest du diese App lieber verwerfen.</string>
+    <string name="editor_nonsense_toast2">Wenn du gar keine Aktion zulassen willst, solltest du diese App lieber von der Liste entfernen.</string>
+    <string name="title_activity_app_picker">App auswählen</string>
+    <string name="app_picker_retrieve">Sammle App-Informationen&#8230;</string>
+    <string name="app_picker_duplicate">Diese App ist bereits auf der Liste.</string>
+    <string name="main_remove_title1"></string>
+    <string name="main_remove_title2">von der Liste entfernen?</string>
+    <string name="main_remove_ok">Entfernen</string>
+    <string name="main_remove_cancel">Abbrechen</string>
+    <string name="main_add_to_list">App hinzufügen</string>
+    <string name="main_check_checking">Ich weiß nicht, ob die Eingabehilfe aktiv ist, lass mich das prüfen&#8230;</string>
+    <string name="main_check_good_message">Die Eingabehilfe ist aktiv und Notify Me! kann seine Aufgabe erfüllen.</string>
+    <string name="main_check_good_button">Los geht\'s!</string>
+    <string name="main_check_bad_message">Es scheint, als wäre die Eingabehilfe nicht aktiv. Prüfe bitte, ob Notify Me! als Eingabehilfe zugelassen ist.</string>
+    <string name="main_check_bad_message0">\nSollte es den Anschein machen, als wärst du schonmal hier gewesen, könnte es sein, dass du gerade einem Fehler in Android begegnest, der verhindert, dass Eingabehilfen korrekt aktiviert werden. Versuche, Notify Me! als Eingabehilfe zu deaktivieren und dann wieder zu aktivieren.</string>
+    <string name="main_check_bad_button">Zeig mir, wo ich hin muss!</string>
+    <string name="main_menu_checkaccessibility">Prüfe Eingabehilfe</string>
+    <string name="main_menu_popup">Popup-Einstellungen</string>
+    <string name="main_menu_popup_background_title">Hintergrundfarbe invertieren</string>
+    <string name="main_menu_popup_background_description">Wenn der Hintergrund eines Popups den Text unlesbar macht, versuche, eine invertierte Hintergrundfarbe zu benutzen.</string>
+    <string name="main_menu_popup_timeout_title">Eigener Bildschirm-Timeout</string>
+    <string name="main_menu_popup_timeout_description">Stelle einen Timeout für die Bildschirmbeleuchtung ein, nachdem sie von einem Popup eingeschaltet wurde. Wenn das Feld leer ist oder nullgesetzt wird, wird die Systemeinstellung des Timeouts verwendet.</string>
+    <string name="main_menu_popup_interface_title">Slider als Bedienoberfläche</string>
+    <string name="main_menu_popup_interface_description">Zeige einen Slider, um mit dem Popup zu interagieren.</string>
+    <string name="main_menu_popup_color_description">Stelle die Hintergrundfarbe des Sliders ein</string>
+    <string name="main_menu_help">Hilfe</string>
+    <string name="main_menu_help_message">Da du hier angekommen bist, solltest du zumindest wissen, was diese App tun soll. Um ihren Zweck zu erfüllen, musst du eine Liste von Apps erstellen, die die Dienste von Notify Me! in Anspruch nehmen dürfen. Diese Liste erstellst du durch Hinzufügen (\"App hinzufügen\" antippen) und Entfernen (App in der Liste gedrückt halten oder über das Menü in ihren Einstellungen) von Apps. Sollte Notify Me! nicht zu funktionieren scheinen, schau ins Hauptmenü und überprüfe, ob die Eingabehilfe korrekt aktiviert ist.</string>
+    <string name="main_menu_help_title">Wie man diese App benutzt</string>
+    <string name="main_menu_help_ok_button">Verstanden!</string>
+    <string name="main_menu_help_question_button">Ich habe noch eine Frage&#8230;</string>
+    <string name="main_menu_about">Über diese App</string>
+    <string name="main_menu_about_message">Eine App, um die Möglichkeiten von Android&#8482; zu erweitern, Benachrichtigungen darzustellen.\nCopyright &#169; 2013 Tom Kranz\nDieses Programm kommt KOMPLETT OHNE GARANTIE. Es ist freie Software und dir steht es frei, sie unter den Bedingungen der Version 3 oder (wenn du das möchtest) späteren Versionen der GPL zu verbreiten; besuche <a href="http://www.gnu.org/licenses/">gnu.org/licenses</a>, um Details zu erfahren.\nAndroid ist eine Handelsmarke der Google Inc.</string>
+    <string name="main_menu_about_title">Über Notify Me!</string>
+    <string name="main_menu_about_ok_button">Okay, coole Sache</string>
+    <string name="notification_view_button">Ansehen</string>
+    <string name="notification_dismiss_button">Ausblenden</string>
+    <string name="notification_collapse_button">Einklappen</string>
+    <string name="notification_expand_button">Ausklappen</string>
+    <string name="accessibility_service_description">Aktiviere diese Eingabehilfe, um Notify Me! zu verwenden. Anderenfalls könnte diese App keine Benachrichtigungen registrieren, was sie praktisch nutzlos machen würde.</string>
+
+</resources>

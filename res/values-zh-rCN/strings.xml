@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notify Me!</string>
+    <string name="title_activity_edit_filter">编辑</string>
+    <string name="editor_app_chooser_title">选择应用</string>
+    <string name="editor_keywords_title">关键词过滤</string>
+    <string name="editor_keywords_description">仅捕获包含以下关键词的通知</string>
+    <string name="editor_popup_title">弹出窗口</string>
+    <string name="editor_popup_description">当应用有通知时显示弹出式窗口</string>
+	<string name="editor_aggressive_title">解锁时通知</string>
+    <string name="editor_aggressive_description">允许在屏幕已解锁（即你正在使用手机时）的情况下弹出通知，这可能会打断你正在进行的游戏或工作，请明智地选择。</string>
+    <string name="editor_expansion_title">允许扩展</string>
+	<string name="editor_expansion_description">允许展开并提供更大的通知框</string>
+	<string name="editor_expanded_title">默认展开</string>
+	<string name="editor_expanded_description">当应用有通知时自动弹出展开的通知</string>
+    <string name="editor_lightup_title">屏幕唤醒</string>
+    <string name="editor_lightup_description">当有通知时直接唤醒屏幕 </string>
+    <string name="editor_menu_apply">保存并退出</string>
+    <string name="editor_menu_apply0">不添加项目</string>
+    <string name="editor_menu_discard">退出不保存</string>
+    <string name="editor_menu_discard0">退出放弃更改</string>
+    <string name="editor_menu_remove">从列表中删除</string>
+    <string name="editor_leave_toast">再按一次返回即退出</string>
+    <string name="editor_nonsense_toast1">"如果你不想做任何动作，不用添加应用到列表中，请直接退出."</string>
+    <string name="editor_nonsense_toast2">"如果你不想再接收应用的通知，请从列表中删除它"</string>
+    <string name="title_activity_app_picker">选择应用</string>
+    <string name="app_picker_retrieve">Retrieving app list&#8230;</string>
+    <string name="app_picker_duplicate">这个应用程序已经在列表中了</string>
+    <string name="main_remove_title1">确定从列表中删除</string>
+    <string name="main_remove_title2">吗？</string>
+    <string name="main_remove_ok">删除</string>
+    <string name="main_remove_cancel">取消</string>
+    <string name="main_add_to_list">添加应用</string>
+    <string name="main_check_checking">正在检查“辅助功能”是否已打开</string>
+    <string name="main_check_good_message">辅助功能已打开，可以开始使用了</string>
+    <string name="main_check_good_button">开始使用</string>
+    <string name="main_check_bad_message">辅助功能似乎未打开，请检查 Notify Me 已经在辅助功能中启用,如果已打开，你可能需要先关闭然后再打开一次</string>
+    <string name="main_check_bad_message0">"
+如果你之前已经打开，可能出现了一些错误阻止了辅助功能的正常开启，请尝试在辅助功能中关闭并重新打开Notify Me！"</string>
+    <string name="main_check_bad_button">带我到那去!</string>
+    <string name="main_menu_checkaccessibility">检查辅助功能是否打开</string>
+    <string name="main_menu_popup">设置</string>
+    <string name="main_menu_popup_background_title">背景反色</string>
+    <string name="main_menu_popup_background_description">"如果背景颜色和文字颜色相近而影响阅读，请选择背景反色"</string>
+    <string name="main_menu_popup_timeout_title">自定义屏幕超时</string>
+    <string name="main_menu_popup_timeout_description">请设置一个时间超时，当弹出通知后如果你没有操作手机多久后自动关屏（单位秒）填0的话是系统默认</string>
+    <string name="main_menu_popup_interface_title">滑动界面</string>
+    <string name="main_menu_popup_interface_description">在弹出的交互窗口中显示一个滑动开关按钮</string>
+    <string name="main_menu_popup_color_description">设置滑动背景颜色</string>
+    <string name="main_menu_help">帮助</string>
+    <string name="main_menu_help_message">你应该知道这个软件是干什么用的，首先你要添加你想弹出通知的应用，添加完之后保存即可。当应用有通知时就会自动弹出显示了。 如果没有，请检查设置中的“辅助功能”是否已打开。</string>
+    <string name="main_menu_help_title">如何使用？</string>
+    <string name="main_menu_help_ok_button">好的</string>
+    <string name="main_menu_help_question_button">仍然不懂</string>
+    <string name="main_menu_about">关于</string>
+    <string name="main_menu_about_message">Notify Me！是一个提高通知功能的Android™应用。
+	© 2013 Tom Kranz 版权所有。 
+	这是一个自由开发的软件。 
+	汉化：力卓社区 @zxc123ke</string>
+    <string name="main_menu_about_title">关于 Notify Me!</string>
+    <string name="main_menu_about_ok_button">好的</string>
+    <string name="notification_view_button">查看</string>
+    <string name="notification_dismiss_button">忽略</string>
+    <string name="notification_collapse_button">收起</string>
+    <string name="notification_expand_button">展开</string>
+    <string name="accessibility_service_description">请启用这项服务，否则Notify Me!将无法使用</string>
+</resources>

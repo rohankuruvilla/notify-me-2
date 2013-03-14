@@ -173,7 +173,7 @@ public class AppPicker extends Activity{
 		protected void onProgressUpdate(Integer... progress){
 			if( progress[0] == 0 ){
 				plsWait.setMax(appInfos.size());
-				plsWait.setMessage("Retrieving app list...");
+				plsWait.setMessage(getText(R.string.app_picker_retrieve));
 				plsWait.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 				plsWait.show();
 			}else if( progress[0] == -1 ){

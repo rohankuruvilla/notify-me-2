@@ -25,6 +25,7 @@
     <string name="editor_nonsense_toast1">If you don\'t want to allow any action, you should rather exit without adding this app to the list.</string>
     <string name="editor_nonsense_toast2">If you don\'t want to allow any action for this app\'s notifications, you should rather remove it from the list.</string>
     <string name="title_activity_app_picker">App Picker</string>
+    <string name="app_picker_retrieve">Retrieving app list&#8230;</string>
     <string name="app_picker_duplicate">This app is already in the list.</string>
     <string name="main_remove_title1">Remove</string>
     <string name="main_remove_title2">from list?</string>

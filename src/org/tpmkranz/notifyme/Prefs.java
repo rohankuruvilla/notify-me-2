@@ -39,14 +39,6 @@ public class Prefs {
 	
 	protected void setPrevVersion(int newVersion){
 		edit.putInt("PreviousVersion", newVersion);
-	}
-	
-	protected boolean isAccessibilityServiceRunning(){
-		return prefs.getBoolean("Accessibility", false);
-	}
-	
-	protected void setAccessibilityServiceRunning(boolean running){
-		edit.putBoolean("Accessibility", running);
 		edit.commit();
 	}
 	

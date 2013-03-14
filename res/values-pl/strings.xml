@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notify Me!</string>
+    <string name="title_activity_edit_filter">Edytor</string>
+    <string name="editor_app_chooser_title">Wybierz appkę</string>
+    <string name="editor_keywords_title">Filtr słów kodowych</string>
+    <string name="editor_keywords_description">Przechwytuj tylko te powiadomienia, które zawierają przynajmniej jedno z następujących słów kodowych lub fraz (jedno słowo/fraza na linię):</string>
+    <string name="editor_popup_title">Pokaż wyskakujące okienka</string>
+    <string name="editor_popup_description">Pokaż wyskakujące okienka dla powiadomień, które generują te aplikacje, w innym przypadku tylko zaświeć display.</string>
+    <string name="editor_aggressive_title">Agresywne powiadomienia</string>
+    <string name="editor_aggressive_description">Pozwól na wyskakiwanie okienek, nawet jeśli ekran jest włączony i odblokowany. Stosuj tę opcję mądrze, ponieważ może przerywać używanie innych aplikacji.</string>
+    <string name="editor_expansion_title">Powiększenie</string>
+    <string name="editor_expansion_description">Pozwól na powiększenie powiadomienia, co otworzy większe okno odczytu.</string>
+    <string name="editor_expanded_title">Powiększaj domyślnie</string>
+    <string name="editor_expanded_description">Powiekszaj okno powiadomienia w momencie wyświetlania.</string>
+    <string name="editor_lightup_title">Zaświeć ekran</string>
+    <string name="editor_lightup_description">Rozjaśnij ekran kiedy ta appka otrzyma powiadomienie.</string>
+    <string name="editor_menu_apply">Wyjście z zapisem zmian</string>
+    <string name="editor_menu_apply0">Wyjście z dodaniem pozycji</string>
+    <string name="editor_menu_discard">Wyjście bez zapisu zmian</string>
+    <string name="editor_menu_discard0">Wyjście bez dodania pozycji</string>
+    <string name="editor_menu_remove">Usuń pozycję z listy</string>
+    <string name="editor_leave_toast">"Aby wyjść bez zapisu, ponownie naciśnij Wstecz. Jeśli nie o to chodziło, zajrzyj może do menu opcji."</string>
+    <string name="editor_nonsense_toast1">"Jeśli nie chcesz pozwolić na żadne działanie, powinieneś raczej wyjść bez dodawania tej appki do listy."</string>
+    <string name="editor_nonsense_toast2">"Jeśli nie chcesz pozwolić na żadne działania dla tej appki, powinieneś raczej usunąć ją z listy."</string>
+    <string name="title_activity_app_picker">Wybór appek</string>
+    <string name="app_picker_retrieve">Retrieving app list&#8230;</string>
+    <string name="app_picker_duplicate">Ta appka już jest na liście.</string>
+    <string name="main_remove_title1">Usuń</string>
+    <string name="main_remove_title2">z listy?</string>
+    <string name="main_remove_ok">Usuń</string>
+    <string name="main_remove_cancel">Zrezygnuj</string>
+    <string name="main_add_to_list">Dodaj appkę</string>
+    <string name="main_check_checking">"Nie wiem, czy działa AccessibilityService, pozwól mi sprawdzić..."</string>
+    <string name="main_check_good_message">AccessibilityService działa i Notify Me! może spełnić swoje zadanie.</string>
+    <string name="main_check_good_button">"Ruszajmy!"</string>
+    <string name="main_check_bad_message">Wydaje się, że AccessibilityService nie działa. Sprawdź, czy Notify Me! jest uaktywnione w Ustawienia Systemu -> Ułatwienia Dostępu.</string>
+    <string name="main_check_bad_message0">"
+Jeśli wydaje Ci się, że już tu byłeś, może to oznaczać błąd Androida, który nie pozwala na prawidłowe uruchomienie AccessibilityService. Spróbuj deaktywować i ponownie uaktywnić Notify Me! w menu Ustawienia Systemu -> Ułatwienia Dostępu."</string>
+    <string name="main_check_bad_button">Zabierz mnie tam!</string>
+    <string name="main_menu_checkaccessibility">Sprawdź Ustawienia Dostępu</string>
+    <string name="main_menu_popup">Preferencje okienek wyskakujących</string>
+    <string name="main_menu_popup_background_title">Odwróć kolor tła</string>
+    <string name="main_menu_popup_background_description">"Jeśli kolor tła okienek wyskakujących powoduje problemy z odczytywaniem powiadomień, spróbuj odwrócić kolor tła. To powinno mieć wpływ tylko na wersje Androida &lt; 3."</string>
+    <string name="main_menu_popup_timeout_title">Własny czas ekranu</string>
+    <string name="main_menu_popup_timeout_description">Ustaw okres czasu, przez który ekran będzie świecił, po zapaleniu go przez powiadomienie. Jeśli pozostawisz to pole puste lub ustawisz 0, zostanie użyty domyślny czas systemu.</string>
+    <string name="main_menu_popup_interface_title">Suwaki w interfejsie</string>
+    <string name="main_menu_popup_interface_description">Pokaż suwaki zamiast przycisków w obsłudze okienek wyskakujących.</string>
+    <string name="main_menu_popup_color_description">Suwaki ustawiania koloru tła</string>
+    <string name="main_menu_help">Pomoc</string>
+    <string name="main_menu_help_message">"Jeśli już jesteś tutaj, powinieneś przynajmniej ogólnie wiedzieć, do czego służy ta appka. Żeby mogła spełniać swoje zadanie, musisz dostarczyć listę aplikacji, które będę mogły korzystać z usług Notify Me!. Zrób to przez dodanie przyciskiem (\"Dodaj appkę\") lub usunięcie (długie przyciśnięcie pozycji lub przez menu w jej ustawieniach) appek do/z listy. Wejdziesz w listę ustawień pozycji przez dotknięcie jej. Jeśli Notify Me! nie robi tego, co należy, zajrzyj do menu Ustawienia Systemu -> Ułatwienia Dostępu i sprawdź, czy jest uaktywnione."</string>
+    <string name="main_menu_help_title">Jak używać appkę</string>
+    <string name="main_menu_help_ok_button">Łapię!</string>
+    <string name="main_menu_help_question_button">"Mam jeszcze pytanie..."</string>
+    <string name="main_menu_about">O tej appce</string>
+    <string name="main_menu_about_message">An app to enhance Android&#8482;\'s abilities to show notifications.\nCopyright &#169; 2013 Tom Kranz\nThis program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under the conditions of the GPLv3 or (at your option) later versions; visit <a href="http://www.gnu.org/licenses/">gnu.org/licenses</a> for details.\nAndroid is a trademark of Google Inc.</string>
+    <string name="main_menu_about_title">O Notify Me!</string>
+    <string name="main_menu_about_ok_button">Spoko</string>
+    <string name="notification_view_button">Obejrzyj</string>
+    <string name="notification_dismiss_button">Odrzuć</string>
+    <string name="notification_collapse_button">Zwiń</string>
+    <string name="notification_expand_button">Rozwiń</string>
+    <string name="accessibility_service_description">Uruchom tę usługę, aby używać Notify Me!. Inaczej nie będzie w stanie przechwycić żadnego powiadomienia, co sprawi, że stanie się bezużyteczna.</string>
+</resources>

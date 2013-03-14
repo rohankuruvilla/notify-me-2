@@ -24,9 +24,11 @@ public class TemporaryStorage extends Application {
 	private static Parcelable storedP;
 	private static int filter;
 	private static long timeout;
+	private static boolean access;
 	@Override
 	public void onCreate(){
 		super.onCreate();
+		access = false;
 	}
 	
 	public void storeStuff(Parcelable parc){
@@ -51,5 +53,13 @@ public class TemporaryStorage extends Application {
 	
 	public long getTimeout(){
 		return timeout;
+	}
+	
+	public void accessGranted(boolean granted){
+		access = granted;
+	}
+	
+	public boolean hasAccess(){
+		return access;
 	}
 }

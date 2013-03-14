@@ -52,11 +52,7 @@ public class NotificationService extends AccessibilityService {
 	
 	@Override
 	public void onAccessibilityEvent(AccessibilityEvent event) {
-		if( event.getPackageName().equals("org.tpmkranz.notifyme") ){
-			if( event.getText().get(0).equals("Actioni contrariam semper et aequalem esse reactionem.") ){
-				prefs.setAccessibilityServiceRunning(true);
-			}
-		}
+		((TemporaryStorage)getApplicationContext()).accessGranted(true);
 		if( !event.getClassName().equals("android.app.Notification") )
 			return;
 		if( filterMatch(event, true) ){
@@ -157,6 +153,12 @@ public class NotificationService extends AccessibilityService {
 	@Override
 	public void onInterrupt() {
 
+	}
+	
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		((TemporaryStorage)getApplicationContext()).accessGranted(false);
 	}
 
 }
