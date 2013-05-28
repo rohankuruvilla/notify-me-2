@@ -32,7 +32,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" android:debuggable="true">
         <activity
             android:name="org.tpmkranz.notifyme.MainActivity"
             android:label="@string/app_name" >
@@ -73,7 +73,7 @@
             android:excludeFromRecents="true"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:theme="@style/TransparentWP" >
+            android:theme="@style/Transparent" >
         </activity>
         <activity
             android:name="org.tpmkranz.notifyme.Unlock"
