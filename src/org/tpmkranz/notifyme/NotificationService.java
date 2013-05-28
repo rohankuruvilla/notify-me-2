@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.PowerManager;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
@@ -52,6 +53,7 @@ public class NotificationService extends AccessibilityService {
 	
 	@Override
 	public void onAccessibilityEvent(AccessibilityEvent event) {
+		Log.i("TESTING", "got event");
 		((TemporaryStorage)getApplicationContext()).accessGranted(true);
 		if( !event.getClassName().equals("android.app.Notification") )
 			return;
@@ -129,8 +131,12 @@ public class NotificationService extends AccessibilityService {
 		}catch(Exception e){
 			
 		}
-		((TemporaryStorage)getApplicationContext()).storeStuff(event.getParcelableData());
-		((TemporaryStorage)getApplicationContext()).storeStuff(filter);
+//		((TemporaryStorage)getApplicationContext()).storeStuff(event.getParcelableData());
+//		((TemporaryStorage)getApplicationContext()).storeStuff(filter);
+		Log.i("TESTING", "Event name: "+event.getPackageName());
+		//((TemporaryStorage)getApplicationContext()).storeStuff(filter, event.getParcelableData());
+		((TemporaryStorage)getApplicationContext()).storeStuff((String)event.getPackageName(), event.getParcelableData(), filter);
+
 		if( ( prefs.isLightUpAllowed(filter) || ((PowerManager)getSystemService(POWER_SERVICE)).isScreenOn() ) )
 			startActivity(new Intent(this, NotificationActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) );
 		else{
