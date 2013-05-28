@@ -17,11 +17,14 @@
 */
 package org.tpmkranz.notifyme;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.Notification;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.PowerManager;
 import android.view.WindowManager.LayoutParams;
 
@@ -32,7 +35,10 @@ public class Unlock extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
-		notif = ((Notification) ((TemporaryStorage)getApplicationContext()).getParcelable());
+		
+		List<Parcelable> notifs = ((List<Parcelable>) ((TemporaryStorage)getApplicationContext()).getParcelable());
+		int idx = ((TemporaryStorage)getApplicationContext()).getCurrentIndex();
+		notif = (Notification) notifs.get(idx);
 		new WaitForUnlock().execute();
 	}
 
