@@ -61,5 +61,6 @@
     <string name="notification_collapse_button">Collapse</string>
     <string name="notification_expand_button">Expand</string>
     <string name="accessibility_service_description">Enable this service to use Notify Me!. Otherwise it would not be able to register any notifications, which would render the app useless.</string>
+    <drawable name="transparent">#00000000</drawable>
 
 </resources>
