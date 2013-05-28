@@ -98,13 +98,13 @@ public class NotificationActivity extends Activity {
 		displayedViews = new ArrayList<View>();
 		
 		if(dialog != null && dialog.isShowing()) {
-			Log.i("TESTING", "on create: dialog exists showing");
+			Log.i("NotificationsActivityDebug", "on create: dialog exists showing");
 			dialog.dismiss();
 		} else if(dialog != null) {
-			Log.i("TESTING", "on create: dialog exists not showing");
+			Log.i("NotificationsActivityDebug", "on create: dialog exists not showing");
 			dialog.dismiss();
 		}
-		Log.i("TESTING", "on create");
+		Log.i("NotificationsActivityDebug", "on create");
 		super.onCreate(savedInstanceState);
 	}
 
@@ -152,7 +152,7 @@ public class NotificationActivity extends Activity {
 			} catch (Exception e) {
 
 			}
-			Log.i("TESTING", "resuming");
+			Log.i("NotificationsActivityDebug", "resuming");
 			if (!preparePopup())
 				return;
 			if (prefs.isInterfaceSlider())
@@ -168,14 +168,14 @@ public class NotificationActivity extends Activity {
 	private boolean preparePopup() {
 		try {
 			if(dialog != null && dialog.isShowing()) {
-				Log.i("TESTING", "dismissing dialog");
+				Log.i("NotificationsActivityDebug", "dismissing dialog");
 				dialog.dismiss();
 				dialog = null;
 			}
 
 				dialog = new AlertDialog.Builder(this).create();
 				dialog.setCanceledOnTouchOutside(false);
-				Log.i("TESTING", "creating dialog "+dialog.toString());
+				Log.i("NotificationsActivityDebug", "creating dialog "+dialog.toString());
 
 				dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 					@Override
@@ -205,7 +205,7 @@ public class NotificationActivity extends Activity {
 			sv.setBackgroundColor(Color.TRANSPARENT);
 			llh.setBackgroundColor(Color.TRANSPARENT);
 
-			Log.i("TESTING", "notifs size: "+notifs.size()+" displayedviews size: "+displayedViews.size());
+			Log.i("NotificationsActivityDebug", "notifs size: "+notifs.size()+" displayedviews size: "+displayedViews.size());
 
 			for (int i = 0; i < notifs.size(); ++i) {
 				notif = (Notification) notifs.get(i);
@@ -230,15 +230,23 @@ public class NotificationActivity extends Activity {
 
 			}
 
-			Log.i("TESTING", "showing dialog process: ");
+			Log.i("NotificationsActivityDebug", "showing dialog process: ");
 			UnlockListener sliderListner = new UnlockListener();
 			geDet = new GestureDetector(sliderListner);
 			llh.setOnTouchListener(new View.OnTouchListener() {
 
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
+
+
+                    /*
+                    *  Handle revert to original position animation on touchEnded
+                    */
+
+                    // Bug: when notification is deleted, it does a glitchy animation for the next notification in the list.
+                    // Should have been fixed with notifDeleted flag, but is not.
+
 					if (!notifDeleted && event.getAction() == MotionEvent.ACTION_UP && scrolledIdx >= 0 && scrolledIdx < displayedViews.size()) {
-						touchValid = false;
 						android.widget.LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) displayedViews
 									.get(scrolledIdx).getLayoutParams();
 
@@ -275,9 +283,14 @@ public class NotificationActivity extends Activity {
 			dTask.cancel(true);
 			dTask = new DrawTask();
 			dTask.execute();
-			Log.i("TESTING", "showing dialog: "+dialog.toString());
+			Log.i("NotificationsActivityDebug", "showing dialog: "+dialog.toString());
 			dialog.show();
-//
+/*
+ *          The following code would have been ideal if it had worked.
+ *          Code to make the background of the notifications
+ *          list transparent.
+*/
+
 //			WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 //			lp.copyFrom(dialog.getWindow().getAttributes());
 //			lp.width = WindowManager.LayoutParams.FILL_PARENT;
@@ -291,6 +304,11 @@ public class NotificationActivity extends Activity {
 
 	@SuppressLint("NewApi")
 	private void showPopupButton() {
+
+        /*
+         * DO NOT KNOW IF THIS WORKS. POPUP BUTTON MODE NEEDS TO BE DISABLED.
+         */
+
 		nView = remViews.apply(this, null);
 		dialog.setView(nView);
 		dialog.setButton(Dialog.BUTTON_POSITIVE,
@@ -343,10 +361,10 @@ public class NotificationActivity extends Activity {
 					Settings.System.SCREEN_OFF_TIMEOUT,
 					((TemporaryStorage) getApplicationContext()).getTimeout());
 		((TemporaryStorage) getApplicationContext()).storeStuff(0L);
-		Log.i("TESTING", "pausing");
+		Log.i("NotificationsActivityDebug", "pausing");
 		if(dialog.isShowing()) {
 			dialog.dismiss();
-			Log.i("TESTING", "pausing and dismissing");
+			Log.i("NotificationsActivityDebug", "pausing and dismissing");
 		}
 		dTask.cancel(true);
 	}
@@ -415,10 +433,14 @@ public class NotificationActivity extends Activity {
 		public boolean onDown(MotionEvent ev) {
 			try {
 
+                /*
+                 * Get the notification being touched (stored in thisView)
+                 * Also get the index of the current notification (stored in thisIdx)
+                 */
+
 				for (int i = 0; i < displayedViews.size(); ++i) {
 					if (contains(displayedViews.get(i), ev.getRawX(),
 							ev.getRawY())) {
-						Log.i("TESTING", "ThisIDX: "+thisIdx+" SizeList: "+displayedViews.size());
 						thisView = displayedViews.get(i);
 						thisIdx = i;
 						break;
@@ -429,14 +451,13 @@ public class NotificationActivity extends Activity {
 				a[1] = ev.getY();
 
 				prevx = ev.getX();
-				touchValid = true;
 				triggers = true;
 				android.widget.LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) thisView
 						.getLayoutParams();
 				leftMargin = lp.leftMargin;
 				((TemporaryStorage) getApplicationContext())
 						.setLongPress(false);
-				return touchValid;
+				return true;
 			} catch (Exception e) {
 
 			}
@@ -447,9 +468,13 @@ public class NotificationActivity extends Activity {
 		public boolean onScroll(MotionEvent ev1, MotionEvent ev2, float dX,
 				float dY) {
 
-			touchValid = false;
 			triggers = false;
 			try {
+
+                /*
+                 * Update position of Notification, and adjust opacity.
+                */
+
                 if(Math.abs(dY) > Math.abs(dX) - 2) return true;
 				android.widget.LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) thisView
 						.getLayoutParams();
@@ -507,8 +532,12 @@ public class NotificationActivity extends Activity {
                  if (vX < 0
 						&& (Math.abs(vX) > 4 * getResources()
 								.getDisplayMetrics().densityDpi
-						|| Math.abs(ev2.getX() - a[0]) > thisView.getWidth() / 2)) {
+						|| Math.abs(ev2.getX() - a[0]) > thisView.getWidth() / 2)) {  // Slide left
 
+
+                    /*
+                     * Remove from TemporaryStorage.
+                     */
 					((TemporaryStorage) getApplicationContext())
 							.removeParcelable(thisIdx);
 					notifs = (List<Parcelable>) ((TemporaryStorage) getApplicationContext()) 
@@ -518,23 +547,30 @@ public class NotificationActivity extends Activity {
 						dialog.cancel();
 					} else {
 						scrolledIdx = -1;
+
+                        /*
+                         * Remove from LinearLayout (List displaying notifications)
+                         */
+
 						llh.removeViewAt(thisIdx);
 						displayedViews.remove(thisIdx);						
 					}
 
-				} else if (vX > 0
+				} // End slide left
+			    else if (vX > 0
 						&& (Math.abs(vX) > 4 * getResources()
 								.getDisplayMetrics().densityDpi
-						|| Math.abs(ev2.getX() - a[0]) > thisView.getWidth() / 2)) {
+						|| Math.abs(ev2.getX() - a[0]) > thisView.getWidth() / 2)) { // Slide right
 					((TemporaryStorage) getApplicationContext())
 							.setCurrentIndex(thisIdx);
 					dialog.cancel();
 					startActivity(new Intent(getApplicationContext(),
 							Unlock.class));
-				} else if(vY < 0 || vY > 0
+				} // End slide right
+				else if(vY < 0 || vY > 0
                         && (Math.abs(vY) > 4 * getResources()
                         .getDisplayMetrics().densityDpi
-                        || Math.abs(ev2.getY() - b[0]) > thisView.getWidth() / 2)) {
+                        || Math.abs(ev2.getY() - b[0]) > thisView.getWidth() / 2)) { // Slide up/down
                     ((TemporaryStorage) getApplicationContext()).setLongPress(true);
                     toggleContentView();
                 }
