@@ -17,38 +17,147 @@
 */
 package org.tpmkranz.notifyme;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import android.app.Application;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class TemporaryStorage extends Application {
-	private static Parcelable storedP;
-	private static int filter;
+	private static List<Parcelable> storedP;
+	private static Map<Integer, Parcelable> storedPMap;
+	private static Map<String, Parcelable> storedPMapNames;
+
+	private static List<Integer> filters;
+	private static List<String> names, namesIdxs;
 	private static long timeout;
 	private static boolean access;
+	private static int idx;
+	private boolean isLongPress;
+	private boolean isBig;
 	@Override
 	public void onCreate(){
 		super.onCreate();
+		isBig = true;
+		filters = new ArrayList<Integer>();
+		storedP = new ArrayList<Parcelable>();
+		names = new ArrayList<String>();
+		namesIdxs = new ArrayList<String>();
+
+		storedPMap = new HashMap<Integer, Parcelable>();
+		storedPMapNames = new HashMap<String, Parcelable>();
+
 		access = false;
+		idx = 0;
 	}
 	
+	public boolean getIsBig() {
+		return isBig;
+	}
+	
+	public void setIsBig(boolean big) {
+		isBig = big;
+	}
 	public void storeStuff(Parcelable parc){
-		storedP = parc;
+		storedP.add(parc);		
 	}
 	
 	public void storeStuff(int filt){
-		filter = filt;
+		filters.add(filt);
 	}
+	
+	public void removeParcelable(int index) {
+		storedPMapNames.remove(namesIdxs.get(index));
+		for(int i = 0; i < names.size(); ++i) {
+			if(names.get(i).equalsIgnoreCase(namesIdxs.get(index))) {
+				Log.i("TESTING", "removing name: "+namesIdxs.get(index));
+				names.remove(i);
+			}
+		}
+		createList();
+	}
+	
+	
+	private void createList() {
+		namesIdxs.clear();
+		List<Parcelable> theList = new ArrayList<Parcelable>();
+		for(int i = 0; i < names.size(); ++i) {
+			theList.add((Parcelable) storedPMapNames.get(names.get(i)));
+			namesIdxs.add(names.get(i));
+	    }
+	
+		storedP.clear();
+		storedP = theList;
+	}
+	
+	private void createList(Parcelable parc, String name) {
+		namesIdxs.clear();
+		List<Parcelable> theList = new ArrayList<Parcelable>();
+		for(int i = 0; i < names.size(); ++i) {
+			if(!names.get(i).equalsIgnoreCase(name)) {
+				theList.add((Parcelable) storedPMapNames.get(names.get(i)));
+				namesIdxs.add(names.get(i));
+	        }
+	    }
+		namesIdxs.add(0, name);
+		theList.add(0, parc);
+		storedP.clear();
+		storedP = theList;
+	}
+	
+	public void setLongPress(boolean isLong) {
+		isLongPress = isLong;
+	}
+	
+	public boolean getLongPress() {
+		return isLongPress;
+	}
+	
+	public void storeStuff(String name, Parcelable parc, int filter){
+		//removeParcelable(parc);
+		if(storedPMapNames.put(name, parc) == null) {
+			storeStuff(parc);
+			storeStuff(name);
+			storeStuff(filter);
+		}
+		
+		createList(parc, name);
+		
+		Log.i("TESTING", "List size: "+storedP.size());
+	}
+	
 	
 	public void storeStuff(long time){
 		timeout = time;
 	}
 	
-	public Parcelable getParcelable(){
+	public void storeStuff(String name){
+		names.add(name);;
+	}
+	
+	
+	public void setCurrentIndex(int index) {
+		idx = index;
+	}
+	
+	public int getCurrentIndex() {
+		return idx;
+	}
+	
+	public List<Parcelable> getParcelable(){
 		return storedP;
 	}
 	
 	public int getFilter(){
-		return filter;
+		return filters.get(0);
+	}
+	
+	public Map<Integer, Parcelable> getParcelableMap() {
+		return storedPMap;
 	}
 	
 	public long getTimeout(){
