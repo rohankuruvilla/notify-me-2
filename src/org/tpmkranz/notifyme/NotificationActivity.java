@@ -238,47 +238,52 @@ public class NotificationActivity extends Activity {
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
 
-
-                    /*
+					boolean ret = geDet.onTouchEvent(event);
+                      /*
                     *  Handle revert to original position animation on touchEnded
                     */
 
                     // Bug: when notification is deleted, it does a glitchy animation for the next notification in the list.
                     // Should have been fixed with notifDeleted flag, but is not.
 
-					if (!notifDeleted && event.getAction() == MotionEvent.ACTION_UP && scrolledIdx >= 0 && scrolledIdx < displayedViews.size()) {
-						android.widget.LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) displayedViews
-									.get(scrolledIdx).getLayoutParams();
+                    if (!notifDeleted && event.getAction() == MotionEvent.ACTION_UP && scrolledIdx >= 0 && scrolledIdx < displayedViews.size()) {
+                        android.widget.LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) displayedViews
+                                .get(scrolledIdx).getLayoutParams();
 
-							displayedViews.get(scrolledIdx).setVisibility(View.VISIBLE);
-							TranslateAnimation anim = new TranslateAnimation(
-									lp.leftMargin, 0, 0, 0);
-							AlphaAnimation anim2 = new AlphaAnimation(
-									displayedViews.get(scrolledIdx).getAlpha(), 1.0f);
+                        displayedViews.get(scrolledIdx).setVisibility(View.VISIBLE);
+                        TranslateAnimation anim = new TranslateAnimation(
+                                lp.leftMargin, 0, 0, 0);
+                        AlphaAnimation anim2 = new AlphaAnimation(
+                                displayedViews.get(scrolledIdx).getAlpha(), 1.0f);
 
-							anim.setDuration(200);
-							anim.setFillAfter(true);
-							
-							anim2.setDuration(200);
-							anim2.setFillAfter(true);
-							
-							AnimationSet as = new AnimationSet(true);
-							as.setFillEnabled(true);
-							as.addAnimation(anim);
-							as.addAnimation(anim2);
-							displayedViews.get(scrolledIdx).startAnimation(as);
+                        Log.i("NotificationsActivityDebug", "animating going back");
 
-							lp.leftMargin = 0;
-							lp.rightMargin = 0;
-							displayedViews.get(scrolledIdx).setLayoutParams(lp);
-							displayedViews.get(scrolledIdx).setAlpha(1);
-				
-						
-					}
-					notifDeleted = false;
-					return geDet.onTouchEvent(event);
+                        anim.setDuration(200);
+                        anim.setFillAfter(true);
+
+                        anim2.setDuration(200);
+                        anim2.setFillAfter(true);
+
+                        AnimationSet as = new AnimationSet(true);
+                        as.setFillEnabled(true);
+                        as.addAnimation(anim);
+                        as.addAnimation(anim2);
+                        displayedViews.get(scrolledIdx).startAnimation(as);
+
+                        lp.leftMargin = 0;
+                        lp.rightMargin = 0;
+                        displayedViews.get(scrolledIdx).setLayoutParams(lp);
+                        displayedViews.get(scrolledIdx).setAlpha(1);
+
+
+                    } else if (notifDeleted) {
+                        Log.i("NotificationsActivityDebug", "Setting notifDeleted false");
+                        notifDeleted = false;
+                    }
+                    return ret;
 				}
 			});
+
 			dialog.setView(sv);
 			dTask.cancel(true);
 			dTask = new DrawTask();
@@ -542,7 +547,9 @@ public class NotificationActivity extends Activity {
 							.removeParcelable(thisIdx);
 					notifs = (List<Parcelable>) ((TemporaryStorage) getApplicationContext()) 
 							.getParcelable();
-					notifDeleted = true;
+                     Log.i("NotificationsActivityDebug", "Setting notifDeleted true");
+
+                     notifDeleted = true;
 					if (notifs.size() < 1) {
 						dialog.cancel();
 					} else {
